@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premise AI | Managed Operations for Commercial Real Estate</title>
+  <meta name="description" content="Premise AI takes over tenant communication, compliance collection, and lease management for commercial and retail property operators.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#000;background:#fff;-webkit-font-smoothing:antialiased;line-height:1.55;}
+    a{color:inherit;text-decoration:none;}
+    .mx{max-width:1200px;margin:0 auto;padding:0 24px;}
+    @media(min-width:768px){.mx{padding:0 40px;}}
+
+    /* Pill labels */
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:999px;border:1px solid #e5e5e7;background:#fff;font-size:14px;font-weight:500;}
+    .pill-dk{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#fff;}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:10px;font-size:15px;font-weight:600;font-family:inherit;border:none;cursor:pointer;transition:all .15s;}
+    .btn-d{background:#000;color:#fff;}.btn-d:hover{background:#1a1a1a;}
+    .btn-o{background:transparent;color:#000;border:1px solid #e5e5e7;}.btn-o:hover{border-color:#999;}
+
+    /* Cards */
+    .cd{border:1px solid rgba(0,0,0,0.06);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:box-shadow .2s,border-color .2s;}.cd:hover{box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.1);}
+
+    /* Headings */
+    h1{font-size:clamp(40px,5.5vw,56px);font-weight:500;letter-spacing:-0.035em;line-height:1.08;}
+    h2{font-size:clamp(30px,4vw,48px);font-weight:500;letter-spacing:-0.03em;line-height:1.1;}
+    h3{font-size:17px;font-weight:600;letter-spacing:-0.01em;}
+
+    /* Architectural photo overlay */
+    .wc{position:relative;overflow:hidden;}
+    .wc::after{content:'';position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.15;pointer-events:none;mix-blend-mode:multiply;filter:blur(8px);}
+    .wc1::after{background-image:url('bg/bg6.jpg');}
+    .wc2::after{background-image:url('bg/bg1.jpg');}
+    .wc3::after{background-image:url('bg/bg3.jpg');}
+    .wc4::after{background-image:url('bg/bg7.jpg');}
+    .wcr1::after{background-position:top left;}
+    .wcr2::after{background-position:bottom right;}
+    .wcr3::after{background-position:center;}
+    .wcr4::after{background-position:top right;}
+    .wcr5::after{background-position:bottom left;}
+    .wcr6::after{background-position:top center;}
+    .wcr7::after{background-position:center right;}
+    .wcr8::after{background-position:bottom center;}
+    .wcr9::after{background-position:center left;}
+
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    @keyframes heroFloat{0%{opacity:0;transform:scale(0.8) translateY(12px);}100%{opacity:1;transform:scale(1) translateY(0);}}
+
+    /* Scroll animations - iOS 26 spring physics */
+    .reveal{opacity:0;transform:translateY(60px);transition:opacity 0.5s ease-out,transform 1.1s cubic-bezier(0.34,1.56,0.64,1);}
+    .reveal.v{opacity:1;transform:translateY(0);}
+    .reveal-s{opacity:0;transform:scale(0.88) translateY(30px);transition:opacity 0.5s ease-out,transform 1.1s cubic-bezier(0.34,1.56,0.64,1);}
+    .reveal-s.v{opacity:1;transform:scale(1) translateY(0);}
+    .rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}
+
+    /* Section-level entrance */
+    .sec-reveal{opacity:0;transform:translateY(80px);transition:opacity 0.6s ease-out,transform 1.2s cubic-bezier(0.34,1.56,0.64,1);}
+    .sec-reveal.v{opacity:1;transform:translateY(0);}
+
+    /* SVG internal animations - paused until parent visible */
+    .svg-anim svg *{animation-play-state:paused!important;}
+    .svg-anim.v svg *{animation-play-state:running!important;}
+
+    /* Smooth accordion */
+    .hiw-desc,.ben-desc{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease,margin .3s ease;opacity:0;margin-top:0!important;}
+    .hiw-desc.open,.ben-desc.open{max-height:500px;opacity:1;margin-top:8px!important;}
+    .hiw-item,.ben-item{transition:all .3s ease;}
+    .hiw-num,.hiw-title{transition:color .3s ease;}
+
+    /* Feature cards: no separator between visual and text */
+    .ft-card{border:1px solid rgba(0,0,0,0.06);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:box-shadow .2s,border-color .2s;}
+    .ft-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.1);}
+    .ft-card-inner{padding:48px;display:flex;flex-direction:column;height:100%;min-height:620px;gap:32px;}
+    #fb .ft-card-inner{min-height:520px;padding:40px;gap:28px;}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #ebebeb;">
+  <div class="mx" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <div style="display:flex;align-items:center;gap:40px;">
+      <a href="/" style="font-size:16px;font-weight:700;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-weight:700;font-size:13px;">P</span></div>Premise AI</a>
+      <div style="display:none;gap:4px;" id="dn"><a href="#highlights" style="font-size:14px;color:#666;padding:8px 14px;">What We Handle</a><a href="#how" style="font-size:14px;color:#666;padding:8px 14px;">How It Works</a><a href="#proof" style="font-size:14px;color:#666;padding:8px 14px;">Results</a></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="mailto:rafi@premisesaas.com" style="font-size:14px;color:#000;font-weight:500;display:none;" id="si">Sign in</a>
+      <a href="#pilot" class="btn btn-d" style="padding:9px 20px;font-size:14px;">Start Your Pilot</a>
+    </div>
+  </div>
+</nav>
+<style>@media(min-width:768px){#si{display:inline!important;}}</style>
+<style>@media(min-width:768px){#dn{display:flex!important;}}</style>
+
+<!-- HERO -->
+<section style="padding:100px 0 56px;">
+  <div class="mx" style="display:grid;grid-template-columns:1fr;gap:40px;align-items:center;" id="hg">
+    <div>
+      <h1 style="margin-bottom:28px;">Your tenants answered. Your compliance handled.</h1>
+      <p style="font-size:17px;color:#666;line-height:1.7;max-width:380px;margin-bottom:36px;">Premise AI takes over tenant communication, compliance collection, and lease management for commercial property operators. You keep full control.</p>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <a href="#pilot" class="btn btn-d" style="padding:16px 32px;font-size:16px;border-radius:12px;">Start a 30-day pilot</a>
+        <a href="#how" class="btn btn-o" style="padding:16px 28px;font-size:16px;border-radius:12px;">See how it works</a>
+      </div>
+    </div>
+    <div class="wc wc1" style="border-radius:24px;width:100%;max-width:560px;min-height:700px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:0 12px 48px rgba(249,115,22,0.15);">
+      <div style="position:absolute;inset:0;background:linear-gradient(150deg,#fcd34d,#fb923c,#ea580c);border-radius:24px;"></div>
+
+      <!-- Status report card: calm, in control, handled. NOT a SaaS dashboard. -->
+      <div style="position:relative;z-index:1;width:90%;max-width:480px;" id="hero-feed" class="svg-anim">
+
+        <!-- Main report card -->
+        <div style="background:#fff;border-radius:16px;box-shadow:0 16px 56px rgba(0,0,0,0.1);overflow:hidden;padding:32px;">
+          <!-- Property header -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid #f0f0f0;animation:heroFloat .6s cubic-bezier(0.34,1.56,0.64,1) .1s both;">
+            <div>
+              <p style="font-size:15px;font-weight:600;letter-spacing:-0.01em;">Riverside Plaza</p>
+              <p style="font-size:11px;color:#999;margin-top:2px;">Monthly SLA Report &middot; March 2026</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;padding:5px 12px;background:#f0fdf4;border-radius:999px;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#16a34a;"></div>
+              <span style="font-size:10px;font-weight:600;color:#16a34a;">All SLAs met</span>
+            </div>
+          </div>
+
+          <!-- SVG: metrics + compliance + lease timeline -->
+          <svg viewBox="0 0 416 340" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>
+              text{font-family:'Inter',-apple-system,sans-serif}
+              @keyframes hBar1{0%{width:0}100%{width:194}}
+              @keyframes hBar2{0%{width:0}100%{width:12}}
+              @keyframes hBar3{0%{width:0}100%{width:6}}
+              @keyframes hPulse{0%,100%{opacity:1}50%{opacity:.3}}
+              @keyframes hFade{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+              @keyframes hPop{0%{opacity:0;transform:translateY(10px) scale(0.92)}60%{transform:translateY(-2px) scale(1.01)}100%{opacity:1;transform:translateY(0) scale(1)}}
+            </style></defs>
+
+            <!-- 3 big metrics - staggered pop -->
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) .2s both;">
+            <rect x="0" y="0" width="128" height="72" rx="10" fill="#f9fafb"/>
+            <text x="14" y="22" style="font-size:9px;fill:#999;font-weight:500">COI Compliance</text>
+            <text x="14" y="52" style="font-size:28px;fill:#16a34a;font-weight:700">97%</text>
+            <text x="80" y="52" style="font-size:9px;fill:#16a34a">&#9650; SLA: 95%</text>
+            </g>
+
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) .35s both;">
+            <rect x="144" y="0" width="128" height="72" rx="10" fill="#f9fafb"/>
+            <text x="158" y="22" style="font-size:9px;fill:#999;font-weight:500">Avg Response</text>
+            <text x="158" y="52" style="font-size:28px;fill:#000;font-weight:700">1.4h</text>
+            <text x="218" y="52" style="font-size:9px;fill:#16a34a">&#9660; SLA: 2h</text>
+            </g>
+
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) .5s both;">
+            <rect x="288" y="0" width="128" height="72" rx="10" fill="#f9fafb"/>
+            <text x="302" y="22" style="font-size:9px;fill:#999;font-weight:500">Lease Events</text>
+            <text x="302" y="52" style="font-size:28px;fill:#16a34a;font-weight:700">100%</text>
+            <text x="370" y="52" style="font-size:9px;fill:#16a34a">&#10003;</text>
+            </g>
+
+            <!-- Section: Compliance breakdown - staggered rows -->
+            <g style="animation:hPop .5s cubic-bezier(0.34,1.56,0.64,1) .65s both;">
+              <text x="0" y="104" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:0.5px">COMPLIANCE STATUS</text>
+            </g>
+
+            <g style="animation:hPop .5s cubic-bezier(0.34,1.56,0.64,1) .75s both;">
+              <text x="0" y="126" style="font-size:10px;fill:#333">Current</text>
+              <rect x="70" y="118" width="210" height="7" rx="3.5" fill="#f0f0f0"/>
+              <rect x="70" y="118" height="7" rx="3.5" fill="#16a34a" style="animation:hBar1 1.5s ease .8s forwards;width:0"/>
+              <text x="290" y="126" style="font-size:10px;fill:#16a34a;font-weight:600">31</text>
+              <circle cx="316" cy="122" r="6" fill="#dcfce7"/><text x="316" y="125" style="font-size:7px;fill:#16a34a;text-anchor:middle;font-weight:600">&#10003;</text>
+            </g>
+
+            <g style="animation:hPop .5s cubic-bezier(0.34,1.56,0.64,1) .85s both;">
+              <text x="0" y="148" style="font-size:10px;fill:#333">Pending</text>
+              <rect x="70" y="140" width="210" height="7" rx="3.5" fill="#f0f0f0"/>
+              <rect x="70" y="140" height="7" rx="3.5" fill="#f59e0b" style="animation:hBar2 1.5s ease 1s forwards;width:0"/>
+              <text x="290" y="148" style="font-size:10px;fill:#f59e0b;font-weight:600">2</text>
+            </g>
+
+            <g style="animation:hPop .5s cubic-bezier(0.34,1.56,0.64,1) .95s both;">
+              <text x="0" y="170" style="font-size:10px;fill:#333">Deficient</text>
+              <rect x="70" y="162" width="210" height="7" rx="3.5" fill="#f0f0f0"/>
+              <rect x="70" y="162" height="7" rx="3.5" fill="#dc2626" style="animation:hBar3 1.5s ease 1.1s forwards;width:0"/>
+              <text x="290" y="170" style="font-size:10px;fill:#dc2626;font-weight:600">1</text>
+            </g>
+
+            <!-- Section: Lease event timeline -->
+            <g style="animation:hPop .5s cubic-bezier(0.34,1.56,0.64,1) 1s both;">
+            <text x="0" y="206" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:0.5px">LEASE EVENTS</text>
+            </g>
+            <line x1="16" y1="218" x2="16" y2="336" stroke="#f0f0f0" stroke-width="1.5"/>
+
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) 1.1s both;">
+              <circle cx="16" cy="230" r="5.5" fill="#16a34a"/>
+              <polyline points="13.5,230 15.5,232 19,228" stroke="#fff" fill="none" stroke-width="1.2" stroke-linecap="round"/>
+              <text x="32" y="228" style="font-size:10px;fill:#000;font-weight:500">Rent escalation sent</text>
+              <text x="32" y="240" style="font-size:9px;fill:#999">Suite 310 &middot; +3.2% &middot; Apr 1</text>
+            </g>
+
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) 1.25s both;">
+              <circle cx="16" cy="264" r="5.5" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="32" y="262" style="font-size:10px;fill:#000;font-weight:500">Renewal window opens</text>
+              <text x="32" y="274" style="font-size:9px;fill:#999">Suite 204 &middot; 12-mo notice &middot; Apr 15</text>
+            </g>
+
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) 1.4s both;">
+              <circle cx="16" cy="298" r="5.5" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="32" y="296" style="font-size:10px;fill:#000;font-weight:500">CAM estimate delivery</text>
+              <text x="32" y="308" style="font-size:9px;fill:#999">All tenants &middot; Annual &middot; May 1</text>
+            </g>
+
+            <g style="animation:hPop .6s cubic-bezier(0.34,1.56,0.64,1) 1.55s both;">
+              <circle cx="16" cy="332" r="5.5" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="32" y="330" style="font-size:10px;fill:#000;font-weight:500">% rent true-up</text>
+              <text x="32" y="342" style="font-size:9px;fill:#999">12 retail tenants &middot; May 15</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Floating SLA badge (overlapping top-right) - delayed pop -->
+        <div style="position:absolute;top:-16px;right:-16px;z-index:2;background:#fff;border-radius:12px;padding:10px 16px;box-shadow:0 8px 28px rgba(0,0,0,0.1);display:flex;align-items:center;gap:8px;animation:heroFloat .6s cubic-bezier(0.34,1.56,0.64,1) 1.2s both;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#f0fdf4;display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><p style="font-size:11px;font-weight:600;">SLA Report</p><p style="font-size:9px;color:#999;">All targets met</p></div>
+        </div>
+
+        <!-- Floating contact count (overlapping bottom-left) - delayed pop -->
+        <div style="position:absolute;bottom:-12px;left:-12px;z-index:2;background:#fff;border-radius:10px;padding:10px 14px;box-shadow:0 6px 24px rgba(0,0,0,0.08);animation:heroFloat .6s cubic-bezier(0.34,1.56,0.64,1) 1.4s both;">
+          <p style="font-size:9px;color:#999;">Contacts this month</p>
+          <p style="font-size:20px;font-weight:700;letter-spacing:-0.02em;">847</p>
+        </div>
+      </div>
+
+      <!-- Status pill -->
+      <div style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:2;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);border-radius:999px;padding:8px 18px;display:flex;align-items:center;gap:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#22c55e;"></div>
+        <span style="font-size:12px;color:#fff;font-weight:500;">All systems operational</span>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media(min-width:1024px){#hg{grid-template-columns:1fr 1fr!important;}}</style>
+
+<!-- LOGOS -->
+<section style="padding:32px 0;border-top:1px solid #ebebeb;border-bottom:1px solid #ebebeb;">
+  <div class="mx" style="text-align:center;">
+    <p style="font-size:14px;color:#999;margin-bottom:24px;">Trusted by <strong style="color:#000;">leading operators</strong> nationwide</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:44px;">
+      <span style="font-size:22px;font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:-0.03em;">Westfield</span>
+      <span style="font-size:22px;font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:-0.03em;">QuadReal</span>
+      <span style="font-size:22px;font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:-0.03em;">Morguard</span>
+      <span style="font-size:22px;font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:-0.03em;">Colliers</span>
+      <span style="font-size:22px;font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:-0.03em;">Primaris&nbsp;REIT</span>
+      <span style="font-size:22px;font-weight:800;color:rgba(0,0,0,0.12);letter-spacing:-0.03em;">RealComm</span>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS (3-card row) -->
+<section style="padding:100px 0 80px;background:#f5f5f7;" id="highlights">
+  <div class="mx">
+    <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:56px;" id="hlh">
+      <div><div class="pill" style="margin-bottom:20px;"><span style="color:#f97316;">&#10022;</span>Highlights</div><h2>The managed service for<br>commercial property ops</h2></div>
+      <p style="font-size:16px;color:#666;line-height:1.7;max-width:400px;align-self:end;text-align:right;margin-left:auto;">Premise is designed for commercial property operators who need tenant communication, compliance, and lease management handled completely.</p>
+    </div>
+    <style>@media(min-width:768px){#hlh{grid-template-columns:1fr 1fr!important;}}</style>
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;" id="hlc">
+      <!-- Card 1: Operational stack SVG -->
+      <div class="cd reveal">
+        <div style="height:360px;overflow:hidden;border-radius:16px 16px 0 0;">
+          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=600&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:28px;"><h3 style="margin-bottom:10px;">You own the decisions</h3><p style="font-size:14px;color:#666;line-height:1.8;">Your rules govern the service. Our ops desk handles human escalations. Our AI handles the volume. You never touch the system.</p></div>
+      </div>
+      <div class="cd reveal rd1">
+        <div style="height:360px;overflow:hidden;border-radius:16px 16px 0 0;">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:28px;"><h3 style="margin-bottom:10px;">Every follow-up sent</h3><p style="font-size:14px;color:#666;line-height:1.8;">COIs chased, collected, verified against your lease. Sales data certified monthly. 8-20 hours per tenant per year of paperwork eliminated.</p></div>
+      </div>
+      <div class="cd reveal rd2">
+        <div style="height:360px;overflow:hidden;border-radius:16px 16px 0 0;">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:28px;"><h3 style="margin-bottom:10px;">Every deadline met</h3><p style="font-size:14px;color:#666;line-height:1.8;">Rent escalations, renewals, CAM, percentage rent. Triggered from your lease data at the right time, sent to the right tenant.</p></div>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#hlc{grid-template-columns:1fr 1fr 1fr!important;}}</style>
+  </div>
+</section>
+
+<!-- THE WEEK YOU'RE HAVING (calendar grid) -->
+<section style="padding:100px 0;border-top:1px solid #ebebeb;">
+  <div class="mx">
+    <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:56px;" id="wkh">
+      <div>
+        <div class="pill" style="margin-bottom:20px;"><span style="color:#dc2626;">&#10022;</span>Sound familiar?</div>
+        <h2>You spent this week<br>chasing people.</h2>
+      </div>
+      <p style="font-size:16px;color:#666;line-height:1.7;max-width:400px;align-self:end;text-align:right;margin-left:auto;">Next week doesn't have to be the same. This is what it looks like when three different systems and four different people are patching together work that should be one thing.</p>
+    </div>
+    <style>@media(min-width:768px){#wkh{grid-template-columns:1fr 1fr!important;}}</style>
+    <!-- Calendar grid -->
+    <div style="border:1px solid rgba(0,0,0,0.06);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.03);" class="reveal">
+      <!-- Day headers -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid #f0f0f0;background:#fafafa;">
+        <div style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:#999;border-right:1px solid #f0f0f0;">Mon</div>
+        <div style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:#999;border-right:1px solid #f0f0f0;">Tue</div>
+        <div style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:#999;border-right:1px solid #f0f0f0;">Wed</div>
+        <div style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:#999;border-right:1px solid #f0f0f0;">Thu</div>
+        <div style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:#999;">Fri</div>
+      </div>
+      <!-- Calendar blocks -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);min-height:320px;">
+        <!-- Monday -->
+        <div style="padding:12px;border-right:1px solid #f0f0f0;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:#999;">8:00 AM</div>
+          <div style="background:#fef2f2;border-left:3px solid #dc2626;border-radius:0 6px 6px 0;padding:10px 12px;flex:1;">
+            <p style="font-size:12px;font-weight:600;color:#991b1b;margin-bottom:4px;">Inbox backlog</p>
+            <p style="font-size:11px;color:#991b1b;line-height:1.5;">14 tenant emails waiting. 2 maintenance requests. Vendor turned away - expired COI.</p>
+          </div>
+        </div>
+        <!-- Tuesday -->
+        <div style="padding:12px;border-right:1px solid #f0f0f0;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:#999;">9:00 AM</div>
+          <div style="background:#fef2f2;border-left:3px solid #dc2626;border-radius:0 6px 6px 0;padding:10px 12px;flex:1;">
+            <p style="font-size:12px;font-weight:600;color:#991b1b;margin-bottom:4px;">COI chase (again)</p>
+            <p style="font-size:11px;color:#991b1b;line-height:1.5;">Chasing 3 tenants for certificates. Spreadsheet says renewal was last month.</p>
+          </div>
+        </div>
+        <!-- Wednesday -->
+        <div style="padding:12px;border-right:1px solid #f0f0f0;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:#999;">11:00 AM</div>
+          <div style="background:#fef2f2;border-left:3px solid #f59e0b;border-radius:0 6px 6px 0;padding:10px 12px;flex:1;">
+            <p style="font-size:12px;font-weight:600;color:#92400e;margin-bottom:4px;">Missed escalation</p>
+            <p style="font-size:11px;color:#92400e;line-height:1.5;">Rent escalation should have gone out 60 days ago. Asset manager asking questions.</p>
+          </div>
+        </div>
+        <!-- Thursday -->
+        <div style="padding:12px;border-right:1px solid #f0f0f0;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:#999;">10:00 PM</div>
+          <div style="background:#fef2f2;border-left:3px solid #dc2626;border-radius:0 6px 6px 0;padding:10px 12px;flex:1;">
+            <p style="font-size:12px;font-weight:600;color:#991b1b;margin-bottom:4px;">After-hours call</p>
+            <p style="font-size:11px;color:#991b1b;line-height:1.5;">HVAC call. Answering service didn't know the fee policy. Tenant upset. You're on the phone.</p>
+          </div>
+        </div>
+        <!-- Friday -->
+        <div style="padding:12px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:#999;">2:00 PM</div>
+          <div style="background:#fef2f2;border-left:3px solid #dc2626;border-radius:0 6px 6px 0;padding:10px 12px;flex:1;">
+            <p style="font-size:12px;font-weight:600;color:#991b1b;margin-bottom:4px;">Staff quit</p>
+            <p style="font-size:11px;color:#991b1b;line-height:1.5;">Ops coordinator gave notice. Only person who knows the compliance tracker.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS (clickable accordion left + gradient right) -->
+<section style="padding:100px 0;" id="how">
+  <div class="mx">
+    <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:56px;" id="hwh">
+      <div><div class="pill" style="margin-bottom:20px;"><span style="color:#3b82f6;">&#10022;</span>How it works</div><h2>You own the decisions.<br>We own the execution.</h2></div>
+      <p style="font-size:16px;color:#666;line-height:1.7;max-width:400px;align-self:end;text-align:right;margin-left:auto;">Premise is not software you operate. It's not a BPO you babysit. It's a managed service with a clear division.</p>
+    </div>
+    <style>@media(min-width:768px){#hwh{grid-template-columns:1fr 1fr!important;}}</style>
+    <div style="display:grid;grid-template-columns:1fr;gap:48px;align-items:stretch;" id="hwg">
+      <div id="hiw-acc" style="display:flex;flex-direction:column;justify-content:space-between;">
+        <div class="hiw-item active" data-idx="0" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="hiw-num" style="font-size:14px;font-weight:600;color:#f97316;">01</span><div><p class="hiw-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;margin-bottom:8px;">You set the rules and make the calls</p><p class="hiw-desc" style="font-size:14px;color:#666;line-height:1.8;">Your rules, policies, and SOPs govern the entire service. All final decisions on exceptions and escalations stay with you. Full visibility and audit access at any time.</p></div></div>
+
+        </div>
+        <div class="hiw-item" data-idx="1" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="hiw-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">02</span><div><p class="hiw-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Our ops desk handles the exceptions</p><p class="hiw-desc" style="font-size:14px;color:#666;line-height:1.8;">Human escalation layer for disputes, emergencies, and sensitive situations. Ongoing QA, training, and knowledge base maintenance.</p></div></div>
+        </div>
+        <div class="hiw-item" data-idx="2" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="hiw-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">03</span><div><p class="hiw-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Our AI handles the volume, 24/7</p><p class="hiw-desc" style="font-size:14px;color:#666;line-height:1.8;">Infrastructure, AI training, fine-tuning, and workflow execution at scale. Every channel, every hour, including after hours and weekends.</p></div></div>
+        </div>
+        <div class="hiw-item" data-idx="3" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="hiw-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">04</span><div><p class="hiw-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Your property builds memory over time</p><p class="hiw-desc" style="font-size:14px;color:#666;line-height:1.8;">Every interaction gets connected and structured. A property on Premise for two years responds faster and escalates less than one that started yesterday.</p></div></div>
+        </div>
+        <div class="hiw-item" data-idx="4" style="padding:20px 0;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="hiw-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">05</span><div><p class="hiw-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Coordinator quits. Nothing changes.</p><p class="hiw-desc" style="font-size:14px;color:#666;line-height:1.8;">Turnover runs 30-50% annually in commercial PM. With Premise, it doesn't matter. We run the system, not your coordinator.</p></div></div>
+        </div>
+      </div>
+      <div class="wc wc4 wcr4" style="border-radius:24px;min-height:720px;position:relative;display:flex;align-items:center;justify-content:center;padding:40px 20px;">
+        <div style="position:absolute;inset:0;background:linear-gradient(170deg,#dbeafe,#93c5fd,#3b82f6);border-radius:24px;"></div>
+        <!-- Swappable SVG panels -->
+        <!-- 01: You set the rules - SLA report with client controls -->
+        <div class="hiw-visual svg-anim" data-idx="0" style="position:relative;z-index:1;width:85%;transition:opacity .3s ease;">
+          <svg viewBox="0 0 340 440" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="340" height="440" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">YOUR RULES</text>
+            <rect x="20" y="40" width="300" height="44" rx="8" fill="#f9fafb"/>
+            <text x="34" y="58" style="font-size:10px;fill:#333;font-weight:500">After-hours HVAC policy</text>
+            <text x="34" y="72" style="font-size:8px;fill:#999">Charge $150 fee. Confirm with tenant before dispatch.</text>
+            <rect x="260" y="50" width="48" height="20" rx="10" fill="#16a34a"/>
+            <text x="284" y="63" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">Active</text>
+
+            <rect x="20" y="94" width="300" height="44" rx="8" fill="#f9fafb"/>
+            <text x="34" y="112" style="font-size:10px;fill:#333;font-weight:500">COI chase escalation</text>
+            <text x="34" y="126" style="font-size:8px;fill:#999">After 3 chases, escalate to property manager.</text>
+            <rect x="260" y="104" width="48" height="20" rx="10" fill="#16a34a"/>
+            <text x="284" y="117" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">Active</text>
+
+            <rect x="20" y="148" width="300" height="44" rx="8" fill="#f9fafb"/>
+            <text x="34" y="166" style="font-size:10px;fill:#333;font-weight:500">Lease notice approval</text>
+            <text x="34" y="180" style="font-size:8px;fill:#999">All rent escalations require your sign-off before send.</text>
+            <rect x="260" y="158" width="48" height="20" rx="10" fill="#16a34a"/>
+            <text x="284" y="171" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">Active</text>
+
+            <line x1="20" y1="208" x2="320" y2="208" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="20" y="228" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">PENDING YOUR DECISION</text>
+
+            <rect x="20" y="240" width="300" height="50" rx="8" fill="#fffbeb" stroke="#fef3c7" stroke-width="1"/>
+            <circle cx="38" cy="265" r="8" fill="#f59e0b"/>
+            <text x="38" y="268" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:700">!</text>
+            <text x="54" y="260" style="font-size:10px;fill:#333;font-weight:500">Vendor dispute - Suite 310</text>
+            <text x="54" y="274" style="font-size:8px;fill:#999">Ops desk recommends: negotiate 15% reduction</text>
+
+            <rect x="20" y="300" width="300" height="50" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <circle cx="38" cy="325" r="8" fill="#16a34a"/>
+            <polyline points="34,325 37,328 42,322" stroke="#fff" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="54" y="320" style="font-size:10px;fill:#333;font-weight:500">Rent escalation - Suite 204</text>
+            <text x="54" y="334" style="font-size:8px;fill:#999">Approved by you &middot; Sent Apr 1</text>
+            <text x="300" y="328" style="font-size:7px;fill:#16a34a;text-anchor:end;font-weight:500">&#10003; Done</text>
+
+            <rect x="20" y="360" width="68" height="12" rx="6" fill="#f0f0f0"/>
+            <text x="54" y="369" style="font-size:7px;fill:#999;text-anchor:middle">3 rules active</text>
+            <rect x="96" y="360" width="88" height="12" rx="6" fill="#f0f0f0"/>
+            <text x="140" y="369" style="font-size:7px;fill:#999;text-anchor:middle">1 pending decision</text>
+          </svg>
+        </div>
+
+        <!-- 02: Ops desk handles exceptions - escalation flow -->
+        <div class="hiw-visual" data-idx="1" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 340 440" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="340" height="440" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">ESCALATION FLOW</text>
+
+            <!-- Incoming request -->
+            <rect x="20" y="42" width="300" height="40" rx="8" fill="#f9fafb"/>
+            <circle cx="38" cy="62" r="8" fill="#f59e0b"/>
+            <text x="38" y="65" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:700">!</text>
+            <text x="54" y="58" style="font-size:10px;fill:#333;font-weight:500">Lease dispute - Suite 310</text>
+            <text x="54" y="70" style="font-size:8px;fill:#999">Tenant contesting +3.2% escalation</text>
+
+            <line x1="170" y1="82" x2="170" y2="104" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="180" y="96" style="font-size:7px;fill:#999">AI cannot resolve</text>
+
+            <!-- Ops desk card -->
+            <rect x="20" y="104" width="300" height="100" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+            <rect x="36" y="118" width="28" height="28" rx="14" fill="#3b82f6"/>
+            <text x="50" y="136" style="font-size:10px;fill:#fff;text-anchor:middle;font-weight:700">&#9679;</text>
+            <text x="74" y="131" style="font-size:11px;fill:#1e40af;font-weight:600">Ops Desk Agent</text>
+            <text x="74" y="144" style="font-size:8px;fill:#6b7280">Reviewing lease terms and tenant history</text>
+
+            <text x="36" y="168" style="font-size:9px;fill:#333;font-weight:500">Recommendation:</text>
+            <text x="36" y="182" style="font-size:8px;fill:#666">Escalation is valid per lease clause 4.2.</text>
+            <text x="36" y="194" style="font-size:8px;fill:#666">Suggest: send confirmation with lease reference.</text>
+
+            <line x1="170" y1="204" x2="170" y2="224" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="180" y="218" style="font-size:7px;fill:#999">Routed to you</text>
+
+            <!-- Your decision -->
+            <rect x="20" y="224" width="300" height="56" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <rect x="36" y="238" width="28" height="28" rx="14" fill="#000"/>
+            <text x="50" y="256" style="font-size:10px;fill:#fff;text-anchor:middle;font-weight:700">&#9679;</text>
+            <text x="74" y="251" style="font-size:11px;fill:#333;font-weight:600">You</text>
+            <text x="74" y="265" style="font-size:8px;fill:#999">Approved &middot; Confirmation sent to tenant</text>
+            <text x="300" y="256" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">&#10003;</text>
+
+            <line x1="20" y1="296" x2="320" y2="296" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="20" y="316" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">OPS DESK THIS MONTH</text>
+            <rect x="20" y="328" width="90" height="36" rx="8" fill="#f9fafb"/>
+            <text x="65" y="344" style="font-size:8px;fill:#999;text-anchor:middle">Escalations</text>
+            <text x="65" y="358" style="font-size:14px;fill:#333;font-weight:700;text-anchor:middle">12</text>
+            <rect x="120" y="328" width="90" height="36" rx="8" fill="#f9fafb"/>
+            <text x="165" y="344" style="font-size:8px;fill:#999;text-anchor:middle">Avg resolve</text>
+            <text x="165" y="358" style="font-size:14px;fill:#333;font-weight:700;text-anchor:middle">4.2h</text>
+            <rect x="220" y="328" width="100" height="36" rx="8" fill="#f9fafb"/>
+            <text x="270" y="344" style="font-size:8px;fill:#999;text-anchor:middle">Client decisions</text>
+            <text x="270" y="358" style="font-size:14px;fill:#333;font-weight:700;text-anchor:middle">3</text>
+          </svg>
+        </div>
+
+        <!-- 03: AI handles the volume - contact resolution dashboard -->
+        <div class="hiw-visual svg-anim" data-idx="2" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 340 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}
+            @keyframes hiwBar1{0%{width:0}100%{width:220}}
+            @keyframes hiwBar2{0%{width:0}100%{width:26}}
+            </style></defs>
+            <rect x="0" y="0" width="340" height="380" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">AI RESOLUTION &middot; THIS MONTH</text>
+
+            <text x="20" y="62" style="font-size:32px;fill:#16a34a;font-weight:700">87%</text>
+            <text x="112" y="50" style="font-size:9px;fill:#999">resolved by AI</text>
+            <text x="112" y="63" style="font-size:9px;fill:#999">without human involvement</text>
+
+            <text x="20" y="92" style="font-size:9px;fill:#555">AI resolved</text>
+            <rect x="20" y="98" width="250" height="7" rx="3.5" fill="#f0f0f0"/>
+            <rect x="20" y="98" height="7" rx="3.5" fill="#16a34a" style="animation:hiwBar1 1.5s ease .3s forwards;width:0"/>
+            <text x="280" y="106" style="font-size:9px;fill:#16a34a;font-weight:600">737</text>
+
+            <text x="20" y="126" style="font-size:9px;fill:#555">Escalated</text>
+            <rect x="20" y="132" width="250" height="7" rx="3.5" fill="#f0f0f0"/>
+            <rect x="20" y="132" height="7" rx="3.5" fill="#f59e0b" style="animation:hiwBar2 1.5s ease .5s forwards;width:0"/>
+            <text x="280" y="140" style="font-size:9px;fill:#f59e0b;font-weight:600">110</text>
+
+            <line x1="20" y1="158" x2="320" y2="158" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="20" y="178" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">BY CHANNEL</text>
+            <rect x="20" y="190" width="90" height="48" rx="8" fill="#f9fafb"/>
+            <text x="65" y="208" style="font-size:8px;fill:#999;text-anchor:middle">Email</text>
+            <text x="65" y="226" style="font-size:16px;fill:#333;font-weight:700;text-anchor:middle">412</text>
+            <rect x="120" y="190" width="90" height="48" rx="8" fill="#f9fafb"/>
+            <text x="165" y="208" style="font-size:8px;fill:#999;text-anchor:middle">Chat</text>
+            <text x="165" y="226" style="font-size:16px;fill:#333;font-weight:700;text-anchor:middle">289</text>
+            <rect x="220" y="190" width="100" height="48" rx="8" fill="#f9fafb"/>
+            <text x="270" y="208" style="font-size:8px;fill:#999;text-anchor:middle">SMS</text>
+            <text x="270" y="226" style="font-size:16px;fill:#333;font-weight:700;text-anchor:middle">146</text>
+
+            <line x1="20" y1="254" x2="320" y2="254" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="20" y="274" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">RECENT AI RESOLUTIONS</text>
+            <rect x="20" y="286" width="300" height="24" rx="6" fill="#f0fdf4"/>
+            <circle cx="34" cy="298" r="4" fill="#16a34a"/>
+            <text x="44" y="301" style="font-size:8px;fill:#333">HVAC request - Suite 204</text>
+            <text x="280" y="301" style="font-size:7px;fill:#16a34a;text-anchor:end">4 min</text>
+            <rect x="20" y="316" width="300" height="24" rx="6" fill="#f0fdf4"/>
+            <circle cx="34" cy="328" r="4" fill="#16a34a"/>
+            <text x="44" y="331" style="font-size:8px;fill:#333">Vendor access - Acme Electric</text>
+            <text x="280" y="331" style="font-size:7px;fill:#16a34a;text-anchor:end">1 min</text>
+            <rect x="20" y="346" width="300" height="24" rx="6" fill="#f0fdf4"/>
+            <circle cx="34" cy="358" r="4" fill="#16a34a"/>
+            <text x="44" y="361" style="font-size:8px;fill:#333">After-hours HVAC - Suite 108</text>
+            <text x="280" y="361" style="font-size:7px;fill:#16a34a;text-anchor:end">6 min</text>
+          </svg>
+        </div>
+
+        <!-- 04: Property builds memory - knowledge growth -->
+        <div class="hiw-visual" data-idx="3" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 340 440" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="340" height="440" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">PROPERTY KNOWLEDGE BASE</text>
+            <text x="320" y="28" style="font-size:8px;fill:#16a34a;font-weight:500;text-anchor:end">Growing</text>
+
+            <rect x="20" y="42" width="300" height="60" rx="10" fill="#f9fafb"/>
+            <text x="34" y="62" style="font-size:9px;fill:#999">Total interactions recorded</text>
+            <text x="34" y="82" style="font-size:24px;fill:#000;font-weight:700">14,832</text>
+            <text x="160" y="82" style="font-size:9px;fill:#16a34a">+847 this month</text>
+
+            <text x="20" y="124" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">KNOWLEDGE CATEGORIES</text>
+            <rect x="20" y="136" width="145" height="44" rx="8" fill="#f9fafb"/>
+            <text x="34" y="156" style="font-size:9px;fill:#333;font-weight:500">Tenant preferences</text>
+            <text x="34" y="170" style="font-size:8px;fill:#999">284 records</text>
+            <rect x="175" y="136" width="145" height="44" rx="8" fill="#f9fafb"/>
+            <text x="189" y="156" style="font-size:9px;fill:#333;font-weight:500">Vendor history</text>
+            <text x="189" y="170" style="font-size:8px;fill:#999">156 records</text>
+            <rect x="20" y="190" width="145" height="44" rx="8" fill="#f9fafb"/>
+            <text x="34" y="210" style="font-size:9px;fill:#333;font-weight:500">Building policies</text>
+            <text x="34" y="224" style="font-size:8px;fill:#999">42 active rules</text>
+            <rect x="175" y="190" width="145" height="44" rx="8" fill="#f9fafb"/>
+            <text x="189" y="210" style="font-size:9px;fill:#333;font-weight:500">Lease terms</text>
+            <text x="189" y="224" style="font-size:8px;fill:#999">34 leases indexed</text>
+
+            <line x1="20" y1="248" x2="320" y2="248" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="20" y="268" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">EXAMPLE: AI USED MEMORY</text>
+
+            <rect x="20" y="280" width="300" height="84" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <text x="34" y="298" style="font-size:9px;fill:#333;font-weight:500">Tenant asked: "What's the after-hours HVAC fee?"</text>
+            <text x="34" y="314" style="font-size:8px;fill:#16a34a;font-weight:500">AI answered instantly from knowledge base:</text>
+            <text x="34" y="330" style="font-size:8px;fill:#666">"The after-hours HVAC fee for your suite is $150.</text>
+            <text x="34" y="342" style="font-size:8px;fill:#666">This was confirmed in your lease agreement (Section 8.2).</text>
+            <text x="34" y="354" style="font-size:8px;fill:#666">Shall I dispatch a technician?"</text>
+          </svg>
+        </div>
+
+        <!-- 05: Coordinator quits - zero disruption -->
+        <div class="hiw-visual" data-idx="4" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 340 440" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="340" height="440" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">STAFF CHANGE EVENT</text>
+
+            <rect x="20" y="42" width="300" height="50" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+            <circle cx="38" cy="67" r="8" fill="#dc2626"/>
+            <text x="38" y="70" style="font-size:7px;fill:#fff;text-anchor:middle;font-weight:700">&#10005;</text>
+            <text x="54" y="62" style="font-size:10px;fill:#333;font-weight:500">Sarah Chen gave notice</text>
+            <text x="54" y="76" style="font-size:8px;fill:#999">Operations Coordinator &middot; Last day: Apr 15</text>
+
+            <line x1="170" y1="92" x2="170" y2="112" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3"/>
+
+            <text x="20" y="128" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">IMPACT ASSESSMENT</text>
+
+            <rect x="20" y="140" width="300" height="36" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <circle cx="38" cy="158" r="4" fill="#16a34a"/>
+            <text x="50" y="154" style="font-size:9px;fill:#333;font-weight:500">Tenant communication</text>
+            <text x="300" y="154" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:500">No impact</text>
+            <text x="50" y="168" style="font-size:8px;fill:#999">AI + ops desk handling 100% of contacts</text>
+
+            <rect x="20" y="184" width="300" height="36" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <circle cx="38" cy="202" r="4" fill="#16a34a"/>
+            <text x="50" y="198" style="font-size:9px;fill:#333;font-weight:500">Compliance tracking</text>
+            <text x="300" y="198" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:500">No impact</text>
+            <text x="50" y="212" style="font-size:8px;fill:#999">Chase sequences running automatically</text>
+
+            <rect x="20" y="228" width="300" height="36" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <circle cx="38" cy="246" r="4" fill="#16a34a"/>
+            <text x="50" y="242" style="font-size:9px;fill:#333;font-weight:500">Lease events</text>
+            <text x="300" y="242" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:500">No impact</text>
+            <text x="50" y="256" style="font-size:8px;fill:#999">All notices scheduled and sending on time</text>
+
+            <rect x="20" y="272" width="300" height="36" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width="1"/>
+            <circle cx="38" cy="290" r="4" fill="#16a34a"/>
+            <text x="50" y="286" style="font-size:9px;fill:#333;font-weight:500">Knowledge base</text>
+            <text x="300" y="286" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:500">No impact</text>
+            <text x="50" y="300" style="font-size:8px;fill:#999">14,832 interactions preserved and accessible</text>
+
+            <line x1="20" y1="324" x2="320" y2="324" stroke="#f0f0f0" stroke-width="1"/>
+
+            <rect x="20" y="336" width="300" height="32" rx="8" fill="#16a34a"/>
+            <text x="170" y="356" style="font-size:11px;fill:#fff;text-anchor:middle;font-weight:600">Zero disruption. Operations unchanged.</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <style>@media(min-width:1024px){#hwg{grid-template-columns:1fr 1fr!important;}}</style>
+  </div>
+</section>
+
+<!-- FEATURES (bento: 2 tall top + 3 bottom) -->
+<section style="padding:100px 0;background:#f5f5f7;" id="what-we-handle">
+  <div class="mx">
+    <div class="pill" style="margin-bottom:20px;"><span style="color:#a855f7;">&#10022;</span>What we handle</div>
+    <h2 style="margin-bottom:12px;">Four things your team does today<br>that we take over completely.</h2>
+    <p style="font-size:16px;color:#666;margin-bottom:56px;">Start with one. Add when you're ready.</p>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:16px;" id="ft">
+      <!-- Card 1: Every contact answered - conversation flow SVG -->
+      <div class="ft-card reveal svg-anim">
+        <div class="ft-card-inner">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px 0;">
+            <svg viewBox="0 0 380 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+              <!-- Tenant message -->
+              <circle cx="24" cy="24" r="14" fill="#f3f4f6"/>
+              <text x="24" y="28" style="font-size:8px;fill:#999;text-anchor:middle">T</text>
+              <rect x="46" y="8" width="240" height="44" rx="12" fill="#f9fafb" stroke="#ebebeb" stroke-width=".5"/>
+              <text x="58" y="24" style="font-size:8px;fill:#999">Suite 204 &middot; Tenant</text>
+              <text x="58" y="40" style="font-size:10px;fill:#333">The HVAC is down again. Can someone look at it today?</text>
+
+              <!-- AI response -->
+              <circle cx="24" cy="80" r="14" fill="#000"/>
+              <text x="24" y="84" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:700">P</text>
+              <rect x="46" y="60" width="280" height="80" rx="12" fill="#f0fdf4" stroke="#dcfce7" stroke-width=".5"/>
+              <text x="58" y="78" style="font-size:8px;fill:#16a34a;font-weight:500">Premise AI &middot; Resolved</text>
+              <text x="58" y="96" style="font-size:10px;fill:#333">Your HVAC request has been resolved. Vendor</text>
+              <text x="58" y="110" style="font-size:10px;fill:#333">dispatched and confirmed completion at 2:30 PM.</text>
+              <rect x="58" y="122" width="120" height="5" rx="2.5" fill="#e5e5e7"/>
+              <rect x="58" y="122" width="102" height="5" rx="2.5" fill="#16a34a"/>
+
+              <!-- More activity rows -->
+              <rect x="0" y="158" width="380" height="1" fill="#f0f0f0"/>
+              <text x="0" y="176" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">TODAY'S CONTACTS</text>
+
+              <rect x="0" y="188" width="380" height="28" rx="6" fill="#f0fdf4"/>
+              <circle cx="14" cy="202" r="4" fill="#16a34a"/>
+              <text x="26" y="205" style="font-size:9px;fill:#333">HVAC - Suite 204</text>
+              <text x="200" y="205" style="font-size:8px;fill:#16a34a">AI resolved</text>
+              <text x="360" y="205" style="font-size:8px;fill:#999;text-anchor:end">4m</text>
+
+              <rect x="0" y="220" width="380" height="28" rx="6" fill="#f0fdf4"/>
+              <circle cx="14" cy="234" r="4" fill="#16a34a"/>
+              <text x="26" y="237" style="font-size:9px;fill:#333">Vendor access - Acme Electric</text>
+              <text x="200" y="237" style="font-size:8px;fill:#16a34a">AI resolved</text>
+              <text x="360" y="237" style="font-size:8px;fill:#999;text-anchor:end">1m</text>
+
+              <rect x="0" y="252" width="380" height="28" rx="6" fill="#fffbeb"/>
+              <circle cx="14" cy="266" r="4" fill="#f59e0b"/>
+              <text x="26" y="269" style="font-size:9px;fill:#333">Lease dispute - Suite 310</text>
+              <text x="200" y="269" style="font-size:8px;fill:#f59e0b">Escalated</text>
+              <text x="360" y="269" style="font-size:8px;fill:#999;text-anchor:end">12m</text>
+
+              <text x="0" y="298" style="font-size:8px;fill:#999">87% AI-resolved &middot; Avg 1.4h response &middot; 0 missed</text>
+            </svg>
+          </div>
+          <div style="margin-top:auto;padding-top:20px;"><h3 style="margin-bottom:10px;">Every contact answered</h3><p style="font-size:14px;color:#666;line-height:1.8;">Connect your property to chat, SMS, and email. AI resolves 70-90% of contacts. Structured intake for vendor access, amenity bookings, key card requests, and service requests. Our ops desk handles escalations, emergencies, and disputes. After hours and weekends included.</p><p style="font-size:12px;color:#999;margin-top:12px;display:flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg><strong style="color:#666;">SLA:</strong> &lt; 2 hour response time, guaranteed</p></div>
+        </div>
+      </div>
+      <!-- Card 2: Every follow-up sent - split layout: donut left + chase right -->
+      <div class="ft-card reveal rd1 svg-anim">
+        <div class="ft-card-inner">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px 0;">
+            <svg viewBox="0 0 380 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs><style>text{font-family:'Inter',-apple-system,sans-serif}
+              @keyframes ftRing{0%{stroke-dasharray:0 100}100%{stroke-dasharray:97 3}}</style></defs>
+
+              <!-- Left side: big donut chart -->
+              <text x="70" y="14" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px;text-anchor:middle">COI COMPLIANCE</text>
+              <circle cx="70" cy="100" r="56" fill="none" stroke="#f0f0f0" stroke-width="8"/>
+              <circle cx="70" cy="100" r="56" fill="none" stroke="#16a34a" stroke-width="8" stroke-linecap="round" transform="rotate(-90 70 100)" style="animation:ftRing 1.5s ease .3s forwards;stroke-dasharray:0 100"/>
+              <text x="70" y="96" style="font-size:28px;fill:#16a34a;font-weight:700;text-anchor:middle">97%</text>
+              <text x="70" y="112" style="font-size:8px;fill:#999;text-anchor:middle">33 of 34</text>
+
+              <rect x="6" y="174" width="52" height="18" rx="9" fill="#dcfce7"/>
+              <circle cx="18" cy="183" r="3" fill="#16a34a"/>
+              <text x="32" y="187" style="font-size:7px;fill:#16a34a;font-weight:500">31 ok</text>
+              <rect x="64" y="174" width="42" height="18" rx="9" fill="#fef3c7"/>
+              <circle cx="76" cy="183" r="3" fill="#f59e0b"/>
+              <text x="90" y="187" style="font-size:7px;fill:#f59e0b;font-weight:500">2</text>
+              <rect x="112" y="174" width="34" height="18" rx="9" fill="#fef2f2"/>
+              <circle cx="122" cy="183" r="3" fill="#dc2626"/>
+              <text x="134" y="187" style="font-size:7px;fill:#dc2626;font-weight:500">1</text>
+
+              <!-- Right side: chase flow -->
+              <line x1="166" y1="10" x2="166" y2="196" stroke="#f0f0f0" stroke-width="1"/>
+
+              <text x="186" y="14" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">CHASE SEQUENCE</text>
+              <text x="186" y="28" style="font-size:9px;fill:#333;font-weight:500">Suite 112, Quick Bites</text>
+              <text x="186" y="40" style="font-size:7px;fill:#999">GL expired &middot; Active chase</text>
+
+              <rect x="186" y="56" width="180" height="32" rx="8" fill="#dcfce7"/>
+              <text x="196" y="68" style="font-size:8px;fill:#16a34a;font-weight:600">Day 30</text>
+              <text x="196" y="80" style="font-size:7px;fill:#16a34a">Email sent &middot; No response</text>
+              <text x="354" y="74" style="font-size:8px;fill:#16a34a;text-anchor:end">&#10003;</text>
+
+              <rect x="186" y="96" width="180" height="32" rx="8" fill="#dcfce7"/>
+              <text x="196" y="108" style="font-size:8px;fill:#16a34a;font-weight:600">Day 15</text>
+              <text x="196" y="120" style="font-size:7px;fill:#16a34a">Email + SMS &middot; No response</text>
+              <text x="354" y="114" style="font-size:8px;fill:#16a34a;text-anchor:end">&#10003;</text>
+
+              <rect x="186" y="136" width="180" height="32" rx="8" fill="#fef3c7" stroke="#fde68a" stroke-width=".5"/>
+              <text x="196" y="148" style="font-size:8px;fill:#f59e0b;font-weight:600">Day 7</text>
+              <text x="196" y="160" style="font-size:7px;fill:#f59e0b">Final notice + ops desk call</text>
+              <text x="354" y="154" style="font-size:8px;fill:#f59e0b;text-anchor:end">&#9679; Active</text>
+
+              <rect x="186" y="176" width="180" height="20" rx="6" fill="#f9fafb"/>
+              <text x="276" y="190" style="font-size:7px;fill:#999;text-anchor:middle">Next: escalate to property manager</text>
+
+              <!-- Bottom: savings -->
+              <rect x="0" y="210" width="380" height="1" fill="#f0f0f0"/>
+              <text x="0" y="234" style="font-size:9px;fill:#333;font-weight:500">Without Premise: 8-20 hours per tenant per year chasing paperwork</text>
+              <text x="0" y="250" style="font-size:9px;fill:#16a34a;font-weight:500">With Premise: zero hours. We handle the entire chase sequence.</text>
+            </svg>
+          </div>
+          <div style="margin-top:auto;"><h3 style="margin-bottom:10px;">Every follow-up sent</h3><p style="font-size:14px;color:#666;line-height:1.8;">COIs chased at 30, 15, and 7 days before expiry. Coverage verified against your lease. Retail sales data collected monthly, verified against percentage rent clauses, certified. Vendor credentialing managed end-to-end.</p><p style="font-size:12px;color:#999;margin-top:12px;display:flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg><strong style="color:#666;">SLA:</strong> 95%+ COI compliance rate, guaranteed</p></div>
+        </div>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#ft{grid-template-columns:1fr 1fr!important;}}</style>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;" id="fb">
+      <!-- Card 3: Every deadline met - horizontal calendar + event cards -->
+      <div class="ft-card reveal">
+        <div class="ft-card-inner">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px 0;">
+            <svg viewBox="0 0 260 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+              <!-- Horizontal timeline bar -->
+              <text x="0" y="12" style="font-size:7px;fill:#999;font-weight:600;letter-spacing:.5px">LEASE EVENTS &middot; NEXT 90 DAYS</text>
+              <rect x="0" y="22" width="260" height="4" rx="2" fill="#f0f0f0"/>
+              <rect x="0" y="22" width="65" height="4" rx="2" fill="#16a34a"/>
+              <circle cx="0" cy="24" r="6" fill="#16a34a"/>
+              <text x="0" y="27" style="font-size:5px;fill:#fff;text-anchor:middle;font-weight:700">&#10003;</text>
+              <circle cx="86" cy="24" r="6" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+              <circle cx="172" cy="24" r="6" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+              <circle cx="260" cy="24" r="6" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="0" y="42" style="font-size:6px;fill:#999;text-anchor:middle">Apr 1</text>
+              <text x="86" y="42" style="font-size:6px;fill:#999;text-anchor:middle">Apr 15</text>
+              <text x="172" y="42" style="font-size:6px;fill:#999;text-anchor:middle">May 1</text>
+              <text x="260" y="42" style="font-size:6px;fill:#999;text-anchor:middle">May 15</text>
+
+              <!-- Event cards below -->
+              <rect x="0" y="56" width="120" height="52" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width=".5"/>
+              <text x="12" y="72" style="font-size:8px;fill:#16a34a;font-weight:600">Rent escalation</text>
+              <text x="12" y="84" style="font-size:7px;fill:#666">Suite 310 &middot; +3.2%</text>
+              <text x="12" y="98" style="font-size:7px;fill:#16a34a;font-weight:500">Sent &#10003;</text>
+
+              <rect x="136" y="56" width="124" height="52" rx="8" fill="#f3e8ff" stroke="#e9d5ff" stroke-width=".5"/>
+              <text x="148" y="72" style="font-size:8px;fill:#7c3aed;font-weight:600">Renewal window</text>
+              <text x="148" y="84" style="font-size:7px;fill:#666">Suite 204 &middot; 12-mo</text>
+              <text x="148" y="98" style="font-size:7px;fill:#7c3aed;font-weight:500">Scheduled</text>
+
+              <rect x="0" y="118" width="120" height="52" rx="8" fill="#f3e8ff" stroke="#e9d5ff" stroke-width=".5"/>
+              <text x="12" y="134" style="font-size:8px;fill:#7c3aed;font-weight:600">CAM estimate</text>
+              <text x="12" y="146" style="font-size:7px;fill:#666">All tenants &middot; Annual</text>
+              <text x="12" y="160" style="font-size:7px;fill:#7c3aed;font-weight:500">Queued</text>
+
+              <rect x="136" y="118" width="124" height="52" rx="8" fill="#f3e8ff" stroke="#e9d5ff" stroke-width=".5"/>
+              <text x="148" y="134" style="font-size:8px;fill:#7c3aed;font-weight:600">% rent true-up</text>
+              <text x="148" y="146" style="font-size:7px;fill:#666">12 retail tenants</text>
+              <text x="148" y="160" style="font-size:7px;fill:#7c3aed;font-weight:500">Queued</text>
+
+              <rect x="0" y="184" width="260" height="24" rx="8" fill="#16a34a"/>
+              <text x="130" y="200" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">100% on-time delivery rate</text>
+
+              <text x="0" y="226" style="font-size:7px;fill:#999">Every notice sent automatically from your lease data.</text>
+            </svg>
+          </div>
+          <div style="margin-top:auto;"><h3 style="font-size:16px;margin-bottom:8px;">Every deadline met</h3><p style="font-size:13px;color:#666;line-height:1.8;">Rent escalations, renewals, CAM, percentage rent. Triggered from your lease data, sent on time, every time.</p><p style="font-size:11px;color:#999;margin-top:10px;display:flex;align-items:center;gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg><strong style="color:#666;">SLA:</strong> 100% on-time delivery</p></div>
+        </div>
+      </div>
+      <!-- Card 4: Every answer instant - chat-style search interaction -->
+      <div class="ft-card reveal rd1">
+        <div class="ft-card-inner">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px 0;">
+            <svg viewBox="0 0 260 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+              <!-- Search query (user bubble) -->
+              <circle cx="244" cy="16" r="12" fill="#f3f4f6"/>
+              <text x="244" y="20" style="font-size:7px;fill:#999;text-anchor:middle">PM</text>
+              <rect x="60" y="4" width="174" height="30" rx="10" fill="#f9fafb" stroke="#ebebeb" stroke-width=".5"/>
+              <text x="72" y="23" style="font-size:9px;fill:#333">COIs expiring next month?</text>
+
+              <!-- AI response (left bubble) -->
+              <rect x="4" y="44" width="12" height="12" rx="3" fill="#000"/>
+              <text x="10" y="53" style="font-size:6px;fill:#fff;text-anchor:middle;font-weight:700">P</text>
+              <rect x="22" y="40" width="220" height="24" rx="10" fill="#f0fdf4" stroke="#dcfce7" stroke-width=".5"/>
+              <text x="34" y="56" style="font-size:8px;fill:#16a34a;font-weight:500">Found 3 tenants. Here are the details:</text>
+
+              <!-- Result cards (stacked, indented) -->
+              <rect x="22" y="76" width="220" height="44" rx="8" fill="#fff" stroke="#ebebeb" stroke-width=".5"/>
+              <circle cx="38" cy="92" r="4" fill="#f59e0b"/>
+              <text x="48" y="90" style="font-size:9px;fill:#333;font-weight:500">Quick Bites, Suite 112</text>
+              <text x="48" y="104" style="font-size:7px;fill:#999">GL expires May 2</text>
+              <rect x="180" y="84" width="48" height="16" rx="8" fill="#fef3c7"/>
+              <text x="204" y="95" style="font-size:7px;fill:#f59e0b;text-anchor:middle;font-weight:600">30 days</text>
+
+              <rect x="22" y="126" width="220" height="44" rx="8" fill="#fff" stroke="#ebebeb" stroke-width=".5"/>
+              <circle cx="38" cy="142" r="4" fill="#f59e0b"/>
+              <text x="48" y="140" style="font-size:9px;fill:#333;font-weight:500">Metro Dental, Suite 305</text>
+              <text x="48" y="154" style="font-size:7px;fill:#999">WC expires May 15</text>
+              <rect x="180" y="134" width="48" height="16" rx="8" fill="#fef3c7"/>
+              <text x="204" y="145" style="font-size:7px;fill:#f59e0b;text-anchor:middle;font-weight:600">43 days</text>
+
+              <rect x="22" y="176" width="220" height="44" rx="8" fill="#fff" stroke="#ebebeb" stroke-width=".5"/>
+              <circle cx="38" cy="192" r="4" fill="#16a34a"/>
+              <text x="48" y="190" style="font-size:9px;fill:#333;font-weight:500">Bay Leaf Cafe, Suite 201</text>
+              <text x="48" y="204" style="font-size:7px;fill:#999">Auto expires May 28</text>
+              <rect x="180" y="184" width="48" height="16" rx="8" fill="#f0fdf4"/>
+              <text x="204" y="195" style="font-size:7px;fill:#16a34a;text-anchor:middle;font-weight:600">56 days</text>
+
+              <text x="130" y="238" style="font-size:7px;fill:#999;text-anchor:middle">14,832 interactions &middot; Instant answers</text>
+            </svg>
+          </div>
+          <div style="margin-top:auto;"><h3 style="font-size:16px;margin-bottom:8px;">Every answer instant</h3><p style="font-size:13px;color:#666;line-height:1.8;">Institutional knowledge structured and searchable. Knowledge base built and maintained by Premise.</p><p style="font-size:11px;color:#999;margin-top:10px;display:flex;align-items:center;gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg><strong style="color:#666;">SLA:</strong> Instant property data access</p></div>
+        </div>
+      </div>
+      <!-- Card 5: Staff-proof - before/after comparison -->
+      <div class="ft-card reveal rd2">
+        <div class="ft-card-inner">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px 0;">
+            <svg viewBox="0 0 260 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+
+              <!-- Alert banner -->
+              <rect x="0" y="0" width="260" height="28" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width=".5"/>
+              <circle cx="16" cy="14" r="5" fill="#dc2626"/>
+              <text x="16" y="17" style="font-size:5px;fill:#fff;text-anchor:middle;font-weight:700">!</text>
+              <text x="28" y="17" style="font-size:8px;fill:#991b1b;font-weight:500">Ops coordinator gave notice &middot; Last day Apr 15</text>
+
+              <!-- Two columns with proper gap -->
+              <text x="0" y="52" style="font-size:7px;fill:#dc2626;font-weight:600;letter-spacing:.5px">WITHOUT PREMISE</text>
+              <text x="142" y="52" style="font-size:7px;fill:#16a34a;font-weight:600;letter-spacing:.5px">WITH PREMISE</text>
+
+              <rect x="0" y="62" width="122" height="38" rx="8" fill="#fef2f2"/>
+              <text x="12" y="78" style="font-size:8px;fill:#991b1b;font-weight:500">Compliance tracker</text>
+              <text x="12" y="92" style="font-size:7px;fill:#991b1b">&#10005; Lost with departing staff</text>
+              <rect x="138" y="62" width="122" height="38" rx="8" fill="#f0fdf4"/>
+              <text x="150" y="78" style="font-size:8px;fill:#16a34a;font-weight:500">Compliance tracker</text>
+              <text x="150" y="92" style="font-size:7px;fill:#16a34a">&#10003; Running automatically</text>
+
+              <rect x="0" y="108" width="122" height="38" rx="8" fill="#fef2f2"/>
+              <text x="12" y="124" style="font-size:8px;fill:#991b1b;font-weight:500">Tenant knowledge</text>
+              <text x="12" y="138" style="font-size:7px;fill:#991b1b">&#10005; Walks out the door</text>
+              <rect x="138" y="108" width="122" height="38" rx="8" fill="#f0fdf4"/>
+              <text x="150" y="124" style="font-size:8px;fill:#16a34a;font-weight:500">Tenant knowledge</text>
+              <text x="150" y="138" style="font-size:7px;fill:#16a34a">&#10003; 14,832 records preserved</text>
+
+              <rect x="0" y="154" width="122" height="38" rx="8" fill="#fef2f2"/>
+              <text x="12" y="170" style="font-size:8px;fill:#991b1b;font-weight:500">New hire ramp</text>
+              <text x="12" y="184" style="font-size:7px;fill:#991b1b">&#10005; 3-6 months to rebuild</text>
+              <rect x="138" y="154" width="122" height="38" rx="8" fill="#f0fdf4"/>
+              <text x="150" y="170" style="font-size:8px;fill:#16a34a;font-weight:500">New hire ramp</text>
+              <text x="150" y="184" style="font-size:7px;fill:#16a34a">&#10003; Zero ramp needed</text>
+
+              <!-- Bottom bars -->
+              <rect x="0" y="202" width="122" height="28" rx="8" fill="#dc2626"/>
+              <text x="61" y="220" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">Operations break</text>
+              <rect x="138" y="202" width="122" height="28" rx="8" fill="#16a34a"/>
+              <text x="199" y="220" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">Zero disruption</text>
+            </svg>
+          </div>
+          <div style="margin-top:auto;"><h3 style="font-size:16px;margin-bottom:8px;">Staff-proof operations</h3><p style="font-size:13px;color:#666;line-height:1.8;">30-50% annual turnover in commercial PM. With Premise, it doesn't matter. We run the system.</p><p style="font-size:11px;color:#999;margin-top:10px;display:flex;align-items:center;gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg><strong style="color:#666;">SLA:</strong> Zero disruption, guaranteed</p></div>
+        </div>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#fb{grid-template-columns:1fr 1fr 1fr!important;}}</style>
+
+    <!-- Works with your tools -->
+    <div style="margin-top:32px;padding:28px 32px;border:1px solid rgba(0,0,0,0.06);border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-bottom:20px;">
+        <p style="font-size:15px;font-weight:600;">Works with your tools</p>
+        <p style="font-size:13px;color:#999;">Integrate diverse data sources to enrich your property's knowledge and capabilities.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#333;padding:8px 16px;background:#dcfce7;border-radius:999px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>Yardi</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#666;padding:8px 16px;border:1px solid #ebebeb;border-radius:999px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>MRI</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#666;padding:8px 16px;border:1px solid #ebebeb;border-radius:999px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>Email</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#666;padding:8px 16px;border:1px solid #ebebeb;border-radius:999px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>SMS</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#666;padding:8px 16px;border:1px solid #ebebeb;border-radius:999px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Chat</span>
+      </div>
+    </div>
+
+    <!-- 3 mini features -->
+    <div style="display:grid;grid-template-columns:1fr;gap:0;margin-top:28px;padding-top:28px;border-top:1px solid #ebebeb;" id="fm">
+      <div style="display:flex;gap:14px;padding:12px 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" style="flex-shrink:0;margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        <div><p style="font-size:14px;font-weight:600;">SLA-backed</p><p style="font-size:13px;color:#666;">If we miss our SLAs, the month is free. Every metric measured and reported.</p></div>
+      </div>
+      <div style="display:flex;gap:14px;padding:12px 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <div><p style="font-size:14px;font-weight:600;">Modular</p><p style="font-size:13px;color:#666;">Start with one operation. Add the rest when you're ready. No lock-in.</p></div>
+      </div>
+      <div style="display:flex;gap:14px;padding:12px 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" style="flex-shrink:0;margin-top:2px;"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+        <div><p style="font-size:14px;font-weight:600;">Always improving</p><p style="font-size:13px;color:#666;">Syncs with your systems and learns from every interaction.</p></div>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#fm{grid-template-columns:1fr 1fr 1fr!important;}}</style>
+  </div>
+</section>
+
+<!-- EXPLORE (clickable tabs, container-width card) -->
+<section style="background:#1a1a1a;padding:80px 0 0;">
+  <div class="mx">
+    <div class="pill pill-dk" style="margin-bottom:20px;"><span style="color:#f97316;">&#10022;</span>Explore</div>
+    <h2 style="color:#fff;margin-bottom:40px;">Discover the Premise AI platform</h2>
+    <!-- Clickable tabs -->
+    <div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:32px;" id="exp-tabs">
+      <span class="exp-tab" data-tab="0" style="font-size:14px;color:rgba(255,255,255,0.3);display:flex;align-items:center;gap:6px;cursor:pointer;padding-bottom:10px;">&#9733; Dashboard</span>
+      <span class="exp-tab active" data-tab="1" style="font-size:14px;color:#fff;font-weight:500;display:flex;align-items:center;gap:6px;border-bottom:2px solid #fff;padding-bottom:10px;cursor:pointer;">&#9679; Your Week</span>
+      <span class="exp-tab" data-tab="2" style="font-size:14px;color:rgba(255,255,255,0.3);display:flex;align-items:center;gap:6px;cursor:pointer;padding-bottom:10px;">&#9650; Compliance</span>
+      <span class="exp-tab" data-tab="3" style="font-size:14px;color:rgba(255,255,255,0.3);display:flex;align-items:center;gap:6px;cursor:pointer;padding-bottom:10px;">&#9830; Lease Events</span>
+      <span class="exp-tab" data-tab="4" style="font-size:14px;color:rgba(255,255,255,0.3);display:flex;align-items:center;gap:6px;cursor:pointer;padding-bottom:10px;">&#8599; Knowledge Base</span>
+    </div>
+    <!-- Dashboard card with gradient glow OUTSIDE the border -->
+    <div style="position:relative;border-radius:20px 20px 0 0;">
+      <!-- Glow OUTSIDE the gradient line, on the dark section bg -->
+      <div style="position:absolute;inset:-30px;border-radius:40px;background:linear-gradient(135deg,rgba(249,115,22,0.35),rgba(236,72,153,0.3),rgba(168,85,247,0.25),rgba(59,130,246,0.2));filter:blur(40px);pointer-events:none;"></div>
+      <!-- Gradient border frame -->
+      <div style="position:relative;border-radius:20px 20px 0 0;padding:3px 3px 0 3px;background:linear-gradient(135deg,#f97316,#ec4899,#a855f7,#3b82f6);">
+      <!-- Dark inner area (clean, no wash) -->
+      <div style="background:#1a1a1a;border-radius:17px 17px 0 0;padding:16px 16px 0;">
+      <div style="background:#fff;border-radius:12px 12px 0 0;overflow:hidden;">
+          <div style="display:flex;min-height:480px;">
+            <div style="width:190px;background:#fafafa;border-right:1px solid #ebebeb;padding:16px 0;display:none;" id="exp-sb">
+              <div style="padding:0 16px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #ebebeb;margin-bottom:8px;">
+                <div style="width:20px;height:20px;border-radius:6px;background:#000;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-weight:700;font-size:9px;">P</span></div>
+                <span style="font-size:12px;font-weight:700;letter-spacing:-0.01em;">Premise AI</span>
+              </div>
+              <div class="exp-sb-item" data-tab="0" style="padding:9px 16px;font-size:12px;color:#a3a3a3;cursor:pointer;">Dashboard</div>
+              <div class="exp-sb-item" data-tab="1" style="padding:9px 16px;font-size:12px;color:#000;font-weight:500;background:#fff;border-right:2px solid #000;cursor:pointer;">Your Week</div>
+              <div class="exp-sb-item" data-tab="2" style="padding:9px 16px;font-size:12px;color:#a3a3a3;cursor:pointer;">Compliance</div>
+              <div class="exp-sb-item" data-tab="3" style="padding:9px 16px;font-size:12px;color:#a3a3a3;cursor:pointer;">Lease Events</div>
+              <div class="exp-sb-item" data-tab="4" style="padding:9px 16px;font-size:12px;color:#a3a3a3;cursor:pointer;">Knowledge Base</div>
+              <div style="padding:9px 16px;font-size:12px;color:#a3a3a3;">Reports</div>
+              <div style="padding:9px 16px;font-size:12px;color:#a3a3a3;">Settings</div>
+            </div>
+            <style>@media(min-width:768px){#exp-sb{display:block!important;}}</style>
+            <!-- Tab content panels -->
+            <div style="flex:1;padding:28px;position:relative;">
+              <div class="exp-panel" data-tab="0" style="display:none;">
+                <p style="font-size:14px;font-weight:600;margin-bottom:16px;">Dashboard</p>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;"><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Properties</p><p style="font-size:22px;font-weight:700;">12</p></div><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Tenants</p><p style="font-size:22px;font-weight:700;">847</p></div><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Compliance</p><p style="font-size:22px;font-weight:700;color:#16a34a;">97%</p></div><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Response</p><p style="font-size:22px;font-weight:700;color:#16a34a;">1.4h</p></div></div>
+                <p style="font-size:13px;color:#666;">All properties operating normally. No escalations pending.</p>
+              </div>
+              <div class="exp-panel" data-tab="1" style="">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;"><p style="font-size:14px;font-weight:600;">Your Week</p><p style="font-size:12px;color:#999;">Riverside Plaza &middot; 34 tenants</p></div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;"><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Contacts</p><p style="font-size:22px;font-weight:700;letter-spacing:-0.02em;">847</p></div><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Avg Response</p><p style="font-size:22px;font-weight:700;letter-spacing:-0.02em;">1.4h</p></div><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Compliance</p><p style="font-size:22px;font-weight:700;color:#16a34a;letter-spacing:-0.02em;">97%</p></div><div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;"><p style="font-size:10px;color:#999;">Lease Events</p><p style="font-size:22px;font-weight:700;color:#16a34a;letter-spacing:-0.02em;">100%</p></div></div>
+                <p style="font-size:12px;font-weight:600;color:#999;margin-bottom:12px;">This week</p>
+                <div><div style="padding:12px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:16px;font-size:13px;color:#666;"><span style="font-weight:600;color:#dc2626;min-width:90px;font-size:12px;">Monday</span>14 emails. 2 maintenance requests. Vendor turned away.</div><div style="padding:12px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:16px;font-size:13px;color:#666;"><span style="font-weight:600;color:#dc2626;min-width:90px;font-size:12px;">Tuesday</span>Chasing 3 tenants for COIs. Renewal was last month.</div><div style="padding:12px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:16px;font-size:13px;color:#666;"><span style="font-weight:600;color:#dc2626;min-width:90px;font-size:12px;">Wednesday</span>Rent escalation 60 days overdue.</div><div style="padding:12px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:16px;font-size:13px;color:#666;"><span style="font-weight:600;color:#dc2626;min-width:90px;font-size:12px;">Thursday</span>After-hours HVAC. Answering service failed.</div><div style="padding:12px 0;display:flex;gap:16px;font-size:13px;color:#666;"><span style="font-weight:600;color:#dc2626;min-width:90px;font-size:12px;">Friday</span>Ops coordinator gave notice.</div></div>
+              </div>
+              <div class="exp-panel" data-tab="2" style="display:none;">
+                <p style="font-size:14px;font-weight:600;margin-bottom:16px;">Compliance</p>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                  <div style="padding:16px;border:1px solid #ebebeb;border-radius:8px;display:flex;justify-content:space-between;"><div><p style="font-size:13px;font-weight:500;">COI Status</p><p style="font-size:11px;color:#999;">34 tenants</p></div><p style="font-size:24px;font-weight:700;color:#16a34a;">97%</p></div>
+                  <div style="padding:16px;border:1px solid #ebebeb;border-radius:8px;display:flex;justify-content:space-between;"><div><p style="font-size:13px;font-weight:500;">Pending</p><p style="font-size:11px;color:#999;">2 tenants chased</p></div><p style="font-size:24px;font-weight:700;color:#f59e0b;">6%</p></div>
+                  <div style="padding:16px;border:1px solid #ebebeb;border-radius:8px;display:flex;justify-content:space-between;"><div><p style="font-size:13px;font-weight:500;">Deficient</p><p style="font-size:11px;color:#999;">Suite 112 - chase #3</p></div><p style="font-size:24px;font-weight:700;color:#dc2626;">3%</p></div>
+                </div>
+              </div>
+              <div class="exp-panel" data-tab="3" style="display:none;">
+                <p style="font-size:14px;font-weight:600;margin-bottom:16px;">Lease Events - Next 90 Days</p>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                  <div style="padding:14px 16px;border:1px solid #ebebeb;border-radius:8px;display:flex;gap:12px;align-items:center;"><span style="font-size:10px;font-weight:700;color:#16a34a;background:#dcfce7;padding:4px 8px;border-radius:6px;">Apr 1</span><div><p style="font-size:13px;font-weight:500;">Rent escalation - Suite 310</p><p style="font-size:11px;color:#999;">+3.2% sent and acknowledged</p></div></div>
+                  <div style="padding:14px 16px;border:1px solid #ebebeb;border-radius:8px;display:flex;gap:12px;align-items:center;"><span style="font-size:10px;font-weight:700;color:#7c3aed;background:#f3e8ff;padding:4px 8px;border-radius:6px;">Apr 15</span><div><p style="font-size:13px;font-weight:500;">Renewal window - Suite 204</p><p style="font-size:11px;color:#999;">12-month notice due</p></div></div>
+                  <div style="padding:14px 16px;border:1px solid #ebebeb;border-radius:8px;display:flex;gap:12px;align-items:center;"><span style="font-size:10px;font-weight:700;color:#7c3aed;background:#f3e8ff;padding:4px 8px;border-radius:6px;">May 1</span><div><p style="font-size:13px;font-weight:500;">CAM estimate - All tenants</p><p style="font-size:11px;color:#999;">Annual delivery queued</p></div></div>
+                </div>
+              </div>
+              <div class="exp-panel" data-tab="4" style="display:none;">
+                <p style="font-size:14px;font-weight:600;margin-bottom:16px;">Knowledge Base</p>
+                <div style="padding:14px;border:1px solid #ebebeb;border-radius:8px;margin-bottom:16px;"><p style="font-size:12px;color:#999;margin-bottom:8px;">Search your property data</p><p style="font-size:14px;font-weight:500;">Which tenants have COIs expiring next month?</p></div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="padding:12px 16px;border:1px solid #ebebeb;border-radius:8px;display:flex;justify-content:space-between;align-items:center;"><div><p style="font-size:13px;font-weight:500;">Suite 112, Quick Bites</p><p style="font-size:11px;color:#999;">GL expires May 2</p></div><span style="font-size:10px;font-weight:600;color:#f59e0b;">30 days</span></div>
+                  <div style="padding:12px 16px;border:1px solid #ebebeb;border-radius:8px;display:flex;justify-content:space-between;align-items:center;"><div><p style="font-size:13px;font-weight:500;">Suite 305, Metro Dental</p><p style="font-size:11px;color:#999;">WC expires May 15</p></div><span style="font-size:10px;font-weight:600;color:#f59e0b;">43 days</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS (same pattern as How It Works, visual left + accordion right) -->
+<section style="padding:100px 0;">
+  <div class="mx">
+    <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:56px;" id="bnh">
+      <div><div class="pill" style="margin-bottom:20px;"><span style="color:#dc2626;">&#10022;</span>Benefits</div><h2>Your property gets smarter<br>every month.</h2></div>
+      <p style="font-size:16px;color:#666;line-height:1.7;max-width:400px;align-self:end;text-align:right;margin-left:auto;">The most differentiated thing Premise delivers. Not available from a BPO or a software tool.</p>
+    </div>
+    <style>@media(min-width:768px){#bnh{grid-template-columns:1fr 1fr!important;}}</style>
+    <div style="display:grid;grid-template-columns:1fr;gap:48px;align-items:stretch;" id="bg2">
+      <!-- Gradient visual (left) with swappable panels -->
+      <div class="wc wc1 wcr3" style="border-radius:24px;min-height:720px;position:relative;display:flex;align-items:center;justify-content:center;padding:40px 20px;overflow:hidden;">
+        <img src="bg/bg5.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(8px);" alt="">
+        <div style="position:absolute;inset:0;background:linear-gradient(145deg,rgba(220,38,38,0.65),rgba(248,113,113,0.55),rgba(254,202,202,0.45));"></div>
+        <!-- 01: Knowledge compounds - growth timeline -->
+        <div class="ben-visual" data-idx="0" style="position:relative;z-index:1;width:85%;transition:opacity .3s ease;">
+          <svg viewBox="0 0 320 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="320" height="400" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="32" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">PROPERTY MEMORY GROWTH</text>
+
+            <text x="20" y="56" style="font-size:24px;fill:#000;font-weight:700">14,832</text>
+            <text x="130" y="50" style="font-size:9px;fill:#999">interactions</text>
+            <text x="130" y="62" style="font-size:9px;fill:#16a34a">recorded &amp; searchable</text>
+
+            <!-- Growth bars (month by month) -->
+            <text x="20" y="90" style="font-size:7px;fill:#999;font-weight:600;letter-spacing:.5px">MONTHLY GROWTH</text>
+            <rect x="20" y="100" width="20" height="60" rx="4" fill="#dcfce7"/><text x="30" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M1</text>
+            <rect x="48" y="88" width="20" height="72" rx="4" fill="#dcfce7"/><text x="58" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M2</text>
+            <rect x="76" y="76" width="20" height="84" rx="4" fill="#dcfce7"/><text x="86" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M3</text>
+            <rect x="104" y="66" width="20" height="94" rx="4" fill="#bbf7d0"/><text x="114" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M6</text>
+            <rect x="132" y="52" width="20" height="108" rx="4" fill="#bbf7d0"/><text x="142" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M9</text>
+            <rect x="160" y="40" width="20" height="120" rx="4" fill="#86efac"/><text x="170" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M12</text>
+            <rect x="188" y="28" width="20" height="132" rx="4" fill="#4ade80"/><text x="198" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M18</text>
+            <rect x="216" y="18" width="20" height="142" rx="4" fill="#22c55e"/><text x="226" y="170" style="font-size:6px;fill:#999;text-anchor:middle">M24</text>
+
+            <line x1="20" y1="188" x2="300" y2="188" stroke="#f0f0f0" stroke-width="1"/>
+
+            <text x="20" y="208" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">WHAT THE PROPERTY REMEMBERS</text>
+            <rect x="20" y="218" width="132" height="36" rx="8" fill="#f9fafb"/>
+            <text x="34" y="234" style="font-size:9px;fill:#333;font-weight:500">Tenant preferences</text>
+            <text x="34" y="248" style="font-size:7px;fill:#999">284 records</text>
+            <rect x="162" y="218" width="138" height="36" rx="8" fill="#f9fafb"/>
+            <text x="176" y="234" style="font-size:9px;fill:#333;font-weight:500">Building policies</text>
+            <text x="176" y="248" style="font-size:7px;fill:#999">42 active rules</text>
+            <rect x="20" y="262" width="132" height="36" rx="8" fill="#f9fafb"/>
+            <text x="34" y="278" style="font-size:9px;fill:#333;font-weight:500">Vendor history</text>
+            <text x="34" y="292" style="font-size:7px;fill:#999">156 records</text>
+            <rect x="162" y="262" width="138" height="36" rx="8" fill="#f9fafb"/>
+            <text x="176" y="278" style="font-size:9px;fill:#333;font-weight:500">Lease terms</text>
+            <text x="176" y="292" style="font-size:7px;fill:#999">34 leases indexed</text>
+
+            <rect x="20" y="370" width="280" height="18" rx="9" fill="#16a34a"/>
+            <text x="160" y="382" style="font-size:8px;fill:#fff;text-anchor:middle;font-weight:600">Property gets smarter every month</text>
+          </svg>
+        </div>
+
+        <!-- 02: Not available from BPO/software - comparison table -->
+        <div class="ben-visual" data-idx="1" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 320 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="320" height="400" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">COMPARISON</text>
+
+            <!-- Header row -->
+            <text x="140" y="52" style="font-size:8px;fill:#999;font-weight:600;text-anchor:middle">BPO</text>
+            <text x="210" y="52" style="font-size:8px;fill:#999;font-weight:600;text-anchor:middle">Software</text>
+            <text x="280" y="52" style="font-size:8px;fill:#16a34a;font-weight:600;text-anchor:middle">Premise</text>
+
+            <line x1="20" y1="60" x2="300" y2="60" stroke="#f0f0f0" stroke-width="1"/>
+
+            <text x="20" y="82" style="font-size:9px;fill:#333">Answers tenants</text>
+            <text x="140" y="82" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="210" y="82" style="font-size:9px;fill:#f59e0b;text-anchor:middle">&#9888;</text>
+            <text x="280" y="82" style="font-size:9px;fill:#16a34a;text-anchor:middle">&#10003;</text>
+            <line x1="20" y1="94" x2="300" y2="94" stroke="#f8f8f8" stroke-width="1"/>
+
+            <text x="20" y="116" style="font-size:9px;fill:#333">Chases COIs</text>
+            <text x="140" y="116" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="210" y="116" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="280" y="116" style="font-size:9px;fill:#16a34a;text-anchor:middle">&#10003;</text>
+            <line x1="20" y1="128" x2="300" y2="128" stroke="#f8f8f8" stroke-width="1"/>
+
+            <text x="20" y="150" style="font-size:9px;fill:#333">Sends lease notices</text>
+            <text x="140" y="150" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="210" y="150" style="font-size:9px;fill:#f59e0b;text-anchor:middle">&#9888;</text>
+            <text x="280" y="150" style="font-size:9px;fill:#16a34a;text-anchor:middle">&#10003;</text>
+            <line x1="20" y1="162" x2="300" y2="162" stroke="#f8f8f8" stroke-width="1"/>
+
+            <text x="20" y="184" style="font-size:9px;fill:#333">Knows your building</text>
+            <text x="140" y="184" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="210" y="184" style="font-size:9px;fill:#f59e0b;text-anchor:middle">&#9888;</text>
+            <text x="280" y="184" style="font-size:9px;fill:#16a34a;text-anchor:middle">&#10003;</text>
+            <line x1="20" y1="196" x2="300" y2="196" stroke="#f8f8f8" stroke-width="1"/>
+
+            <text x="20" y="218" style="font-size:9px;fill:#333">Builds knowledge</text>
+            <text x="140" y="218" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="210" y="218" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="280" y="218" style="font-size:9px;fill:#16a34a;text-anchor:middle">&#10003;</text>
+            <line x1="20" y1="230" x2="300" y2="230" stroke="#f8f8f8" stroke-width="1"/>
+
+            <text x="20" y="252" style="font-size:9px;fill:#333;font-weight:500">Works when staff quit</text>
+            <text x="140" y="252" style="font-size:9px;fill:#dc2626;text-anchor:middle">&#10005;</text>
+            <text x="210" y="252" style="font-size:9px;fill:#dc2626;text-anchor:middle">Breaks</text>
+            <text x="280" y="252" style="font-size:9px;fill:#16a34a;text-anchor:middle;font-weight:600">&#10003;</text>
+
+            <line x1="20" y1="270" x2="300" y2="270" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="160" y="296" style="font-size:10px;fill:#333;font-weight:600;text-anchor:middle">Only Premise does all six.</text>
+            <text x="160" y="314" style="font-size:8px;fill:#999;text-anchor:middle">As a managed service, not a tool you operate.</text>
+          </svg>
+        </div>
+
+        <!-- 03: Staff turnover - before/after impact -->
+        <div class="ben-visual" data-idx="2" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 320 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="320" height="400" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+
+            <rect x="20" y="16" width="280" height="32" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width=".5"/>
+            <circle cx="36" cy="32" r="6" fill="#dc2626"/>
+            <text x="36" y="35" style="font-size:6px;fill:#fff;text-anchor:middle;font-weight:700">!</text>
+            <text x="50" y="35" style="font-size:9px;fill:#991b1b;font-weight:500">Ops coordinator gave notice</text>
+
+            <text x="20" y="72" style="font-size:7px;fill:#999;font-weight:600;letter-spacing:.5px">IMPACT ASSESSMENT</text>
+
+            <rect x="20" y="84" width="280" height="32" rx="6" fill="#f0fdf4"/>
+            <circle cx="38" cy="100" r="4" fill="#16a34a"/>
+            <text x="50" y="103" style="font-size:9px;fill:#333">Tenant communication</text>
+            <text x="288" y="103" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">No impact</text>
+
+            <rect x="20" y="122" width="280" height="32" rx="6" fill="#f0fdf4"/>
+            <circle cx="38" cy="138" r="4" fill="#16a34a"/>
+            <text x="50" y="141" style="font-size:9px;fill:#333">Compliance tracking</text>
+            <text x="288" y="141" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">No impact</text>
+
+            <rect x="20" y="160" width="280" height="32" rx="6" fill="#f0fdf4"/>
+            <circle cx="38" cy="176" r="4" fill="#16a34a"/>
+            <text x="50" y="179" style="font-size:9px;fill:#333">Lease events</text>
+            <text x="288" y="179" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">No impact</text>
+
+            <rect x="20" y="198" width="280" height="32" rx="6" fill="#f0fdf4"/>
+            <circle cx="38" cy="214" r="4" fill="#16a34a"/>
+            <text x="50" y="217" style="font-size:9px;fill:#333">Knowledge base</text>
+            <text x="288" y="217" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">No impact</text>
+
+            <line x1="20" y1="248" x2="300" y2="248" stroke="#f0f0f0" stroke-width="1"/>
+
+            <text x="160" y="272" style="font-size:11px;fill:#333;font-weight:600;text-anchor:middle">30-50% annual turnover</text>
+            <text x="160" y="290" style="font-size:9px;fill:#999;text-anchor:middle">in commercial property management</text>
+
+            <rect x="20" y="306" width="280" height="22" rx="6" fill="#16a34a"/>
+            <text x="160" y="321" style="font-size:9px;fill:#fff;text-anchor:middle;font-weight:600">Zero disruption. Operations unchanged.</text>
+          </svg>
+        </div>
+
+        <!-- 04: You never touch the system - managed flow -->
+        <div class="ben-visual" data-idx="3" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 320 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="320" height="400" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">WHAT PREMISE MANAGES FOR YOU</text>
+
+            <rect x="20" y="44" width="280" height="38" rx="8" fill="#f9fafb"/>
+            <circle cx="42" cy="63" r="10" fill="#22c55e"/>
+            <polyline points="38,63 41,66 46,60" stroke="#fff" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="60" y="60" style="font-size:10px;fill:#333;font-weight:500">AI training &amp; fine-tuning</text>
+            <text x="60" y="74" style="font-size:7px;fill:#999">Continuous model optimization</text>
+
+            <rect x="20" y="90" width="280" height="38" rx="8" fill="#f9fafb"/>
+            <circle cx="42" cy="109" r="10" fill="#22c55e"/>
+            <polyline points="38,109 41,112 46,106" stroke="#fff" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="60" y="106" style="font-size:10px;fill:#333;font-weight:500">Response QA</text>
+            <text x="60" y="120" style="font-size:7px;fill:#999">Every AI response quality-checked</text>
+
+            <rect x="20" y="136" width="280" height="38" rx="8" fill="#f9fafb"/>
+            <circle cx="42" cy="155" r="10" fill="#22c55e"/>
+            <polyline points="38,155 41,158 46,152" stroke="#fff" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="60" y="152" style="font-size:10px;fill:#333;font-weight:500">Knowledge base maintenance</text>
+            <text x="60" y="166" style="font-size:7px;fill:#999">Policies, procedures, lease data</text>
+
+            <rect x="20" y="182" width="280" height="38" rx="8" fill="#f9fafb"/>
+            <circle cx="42" cy="201" r="10" fill="#22c55e"/>
+            <polyline points="38,201 41,204 46,198" stroke="#fff" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="60" y="198" style="font-size:10px;fill:#333;font-weight:500">Infrastructure &amp; uptime</text>
+            <text x="60" y="212" style="font-size:7px;fill:#999">Multi-cloud, 99.9% availability</text>
+
+            <rect x="20" y="228" width="280" height="38" rx="8" fill="#f9fafb"/>
+            <circle cx="42" cy="247" r="10" fill="#22c55e"/>
+            <polyline points="38,247 41,250 46,244" stroke="#fff" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="60" y="244" style="font-size:10px;fill:#333;font-weight:500">Escalation handling</text>
+            <text x="60" y="258" style="font-size:7px;fill:#999">Human ops desk for complex issues</text>
+
+            <line x1="20" y1="280" x2="300" y2="280" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="160" y="304" style="font-size:10px;fill:#333;font-weight:600;text-anchor:middle">You never touch the system.</text>
+            <text x="160" y="322" style="font-size:8px;fill:#999;text-anchor:middle">That is part of the service.</text>
+          </svg>
+        </div>
+
+        <!-- 05: Full control - decision authority -->
+        <div class="ben-visual" data-idx="4" style="position:absolute;z-index:1;width:85%;opacity:0;transition:opacity .3s ease;">
+          <svg viewBox="0 0 320 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>text{font-family:'Inter',-apple-system,sans-serif}</style></defs>
+            <rect x="0" y="0" width="320" height="400" rx="14" fill="#fff" style="filter:drop-shadow(0 4px 16px rgba(0,0,0,.06))"/>
+            <text x="20" y="28" style="font-size:8px;fill:#999;font-weight:600;letter-spacing:.5px">YOUR DECISION AUTHORITY</text>
+
+            <text x="20" y="56" style="font-size:22px;fill:#000;font-weight:700">Full control.</text>
+            <text x="20" y="74" style="font-size:9px;fill:#999">Every decision stays with you. Always.</text>
+
+            <line x1="20" y1="90" x2="300" y2="90" stroke="#f0f0f0" stroke-width="1"/>
+
+            <rect x="20" y="104" width="280" height="40" rx="8" fill="#f9fafb"/>
+            <text x="34" y="122" style="font-size:10px;fill:#333;font-weight:500">Your SOPs govern every interaction</text>
+            <text x="34" y="136" style="font-size:7px;fill:#999">Building policies, vendor rules, escalation paths</text>
+            <text x="288" y="128" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">&#10003;</text>
+
+            <rect x="20" y="152" width="280" height="40" rx="8" fill="#f9fafb"/>
+            <text x="34" y="170" style="font-size:10px;fill:#333;font-weight:500">All exceptions require your sign-off</text>
+            <text x="34" y="184" style="font-size:7px;fill:#999">Disputes, policy changes, sensitive decisions</text>
+            <text x="288" y="176" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">&#10003;</text>
+
+            <rect x="20" y="200" width="280" height="40" rx="8" fill="#f9fafb"/>
+            <text x="34" y="218" style="font-size:10px;fill:#333;font-weight:500">Full reporting and audit access</text>
+            <text x="34" y="232" style="font-size:7px;fill:#999">Response times, compliance, escalations, costs</text>
+            <text x="288" y="224" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">&#10003;</text>
+
+            <rect x="20" y="248" width="280" height="40" rx="8" fill="#f9fafb"/>
+            <text x="34" y="266" style="font-size:10px;fill:#333;font-weight:500">AI never makes high-risk decisions</text>
+            <text x="34" y="280" style="font-size:7px;fill:#999">No legal notices, no lease negotiations, no policy exceptions</text>
+            <text x="288" y="272" style="font-size:8px;fill:#16a34a;text-anchor:end;font-weight:600">&#10003;</text>
+
+            <rect x="20" y="300" width="280" height="28" rx="8" fill="#f0fdf4" stroke="#dcfce7" stroke-width=".5"/>
+            <text x="160" y="318" style="font-size:9px;fill:#16a34a;text-anchor:middle;font-weight:600">Audit access at any time &middot; Full transparency</text>
+          </svg>
+        </div>
+      </div>
+      <!-- Accordion (right) - same pattern as How It Works -->
+      <div id="ben-acc" style="display:flex;flex-direction:column;justify-content:space-between;">
+        <div class="ben-item active" data-idx="0" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="ben-num" style="font-size:14px;font-weight:600;color:#dc2626;">01</span><div><p class="ben-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;margin-bottom:8px;">Knowledge compounds, not disappears</p><p class="ben-desc open" style="font-size:14px;color:#666;line-height:1.8;">Every interaction gets connected and structured. The property builds memory over time. A property on Premise for two years runs more consistently than one that started yesterday.</p></div></div>
+        </div>
+        <div class="ben-item" data-idx="1" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="ben-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">02</span><div><p class="ben-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Not available from a BPO or software tool</p><p class="ben-desc" style="font-size:14px;color:#666;line-height:1.8;">A BPO takes messages. Software sends you reminders. Neither builds a living knowledge base that compounds over time. Only a managed service model does this.</p></div></div>
+        </div>
+        <div class="ben-item" data-idx="2" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="ben-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">03</span><div><p class="ben-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Staff turnover becomes irrelevant</p><p class="ben-desc" style="font-size:14px;color:#666;line-height:1.8;">Turnover runs 30-50% annually in commercial PM. Every time someone leaves, a SaaS tool degrades. With Premise, turnover doesn't matter because Premise runs the system.</p></div></div>
+        </div>
+        <div class="ben-item" data-idx="3" style="padding:20px 0;border-bottom:1px solid #ebebeb;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="ben-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">04</span><div><p class="ben-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">You never touch the system</p><p class="ben-desc" style="font-size:14px;color:#666;line-height:1.8;">"We tried AI tools and ended up managing them ourselves." Premise manages the AI. That is part of the service. You own the decisions. The execution beneath that is ours.</p></div></div>
+        </div>
+        <div class="ben-item" data-idx="4" style="padding:20px 0;cursor:pointer;">
+          <div style="display:flex;gap:16px;"><span class="ben-num" style="font-size:14px;font-weight:600;color:#d4d4d4;">05</span><div><p class="ben-title" style="font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#a3a3a3;">Full control, full visibility</p><p class="ben-desc" style="font-size:14px;color:#666;line-height:1.8;">"We're worried about losing control." You own every decision. Every exception, every escalation, every policy. Full reporting and audit access at any time.</p></div></div>
+        </div>
+      </div>
+    </div>
+    <style>@media(min-width:1024px){#bg2{grid-template-columns:1fr 1fr!important;}}</style>
+  </div>
+</section>
+
+<!-- ENTERPRISE (3 watercolor cards) -->
+<section style="padding:100px 0;border-top:1px solid #ebebeb;">
+  <div class="mx" style="text-align:center;">
+    <div class="pill" style="margin-bottom:20px;margin-left:auto;margin-right:auto;"><span style="color:#a855f7;">&#10022;</span>Enterprise</div>
+    <h2 style="margin-bottom:56px;">Why this isn't software<br>and isn't a BPO</h2>
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;" id="eg">
+      <div class="cd reveal">
+        <div style="height:280px;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?w=600&h=400&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:24px;text-align:left;"><h3 style="margin-bottom:6px;">Hire more staff</h3><p style="font-size:13px;color:#666;line-height:1.7;">30-50% annual turnover. Always retraining. Doesn't scale. No after-hours coverage.</p></div>
+      </div>
+      <div class="cd reveal rd1">
+        <div style="height:280px;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=600&h=400&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:24px;text-align:left;"><h3 style="margin-bottom:6px;">Your BPO</h3><p style="font-size:13px;color:#666;line-height:1.7;">Takes a message. Doesn't know your building. $1.50/min for "I'll pass that along."</p></div>
+      </div>
+      <div class="cd reveal rd2">
+        <div style="height:280px;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:24px;text-align:left;"><h3 style="margin-bottom:6px;">A software tool</h3><p style="font-size:13px;color:#666;line-height:1.7;">You buy the tool. Then you hire someone to run it, train it, QA it. When that person leaves, you start over. You didn't buy a solution.</p></div>
+      </div>
+      <div class="cd reveal rd3">
+        <div style="height:280px;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=600&h=400&fit=crop&crop=center" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="padding:24px;text-align:left;"><h3 style="margin-bottom:6px;">Premise AI</h3><p style="font-size:13px;color:#666;line-height:1.7;">AI resolves 70-90%. Ops desk handles the rest. We build the knowledge base, run the QA. Coordinator quits. Nothing changes.</p></div>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#eg{grid-template-columns:1fr 1fr 1fr 1fr!important;}}</style>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (2-col grid like Chatbase) -->
+<!-- VERIFY: Confirm all testimonial attributions are authorized -->
+<section style="padding:100px 0;background:#f5f5f7;" id="proof">
+  <div class="mx" style="text-align:center;">
+    <div class="pill" style="margin-bottom:20px;margin-left:auto;margin-right:auto;"><span style="color:#000;">&#10022;</span>Testimonials</div>
+    <h2 style="margin-bottom:12px;">What people say</h2>
+    <p style="font-size:16px;color:#666;margin-bottom:56px;">Here's what our partners have to say.</p>
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;text-align:left;" id="tg">
+      <!-- Row 1: 2 quotes + stat -->
+      <div class="cd" style="padding:32px;"><p style="font-weight:700;font-size:14px;margin-bottom:16px;">QuadReal</p><p style="font-size:14px;color:#666;line-height:1.8;">"We went from 500 compliance checks a year to 3,500 annually without increasing staff. We used to spend 80% of our time on administrative work."</p><div style="margin-top:20px;display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="color:#fff;font-weight:700;font-size:14px;">JC</span></div><div><p style="font-size:13px;font-weight:600;">Jerry Chaves</p><p style="font-size:12px;color:#999;">Director, Risk Management &amp; Insurance</p></div></div></div>
+      <div class="cd" style="padding:32px;"><p style="font-weight:700;font-size:14px;margin-bottom:16px;">Westfield</p><p style="font-size:14px;color:#666;line-height:1.8;">"Instrumental to our expansion into the southeast. Reliable technology supporting our management teams reduced onboarding times and reliably boosted IRR."</p><div style="margin-top:20px;display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ea580c);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="color:#fff;font-weight:700;font-size:14px;">JE</span></div><div><p style="font-size:13px;font-weight:600;">Julia Elliott</p><p style="font-size:12px;color:#999;">Manager, Analysis &amp; Insights</p></div></div></div>
+      <div class="wc wc2 wcr9" style="border-radius:16px;background:linear-gradient(145deg,#fde68a,#fb923c,#ea580c);padding:32px;display:flex;flex-direction:column;justify-content:center;text-align:left;"><p style="position:relative;z-index:1;font-size:52px;font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1;">500&rarr;3,500</p><p style="position:relative;z-index:1;font-size:14px;color:rgba(255,255,255,0.8);margin-top:8px;line-height:1.5;">compliance checks per year<br>without adding staff (QuadReal)</p></div>
+      <!-- Row 2: 2 wider quotes -->
+      <div class="cd" style="padding:32px;"><p style="font-weight:700;font-size:14px;margin-bottom:16px;">Primaris REIT</p><p style="font-size:14px;color:#666;line-height:1.8;">"Less time on data entry while improving our reporting quality. Updates are consistent and meaningful, and the customer service is exemplary at every level."</p><div style="margin-top:20px;display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#7c3aed);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="color:#fff;font-weight:700;font-size:14px;">FC</span></div><div><p style="font-size:13px;font-weight:600;">Fatima Chamali</p><p style="font-size:12px;color:#999;">Director, Operational Risk Management</p></div></div></div>
+      <!-- PLACEHOLDER: Morguard testimonial needs verification with Rafi before including. Slot reserved. -->
+      <div class="cd" style="padding:32px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">
+          <span style="font-size:16px;font-weight:700;color:rgba(0,0,0,0.1);">Westfield</span>
+          <span style="font-size:16px;font-weight:700;color:rgba(0,0,0,0.1);">QuadReal</span>
+          <span style="font-size:16px;font-weight:700;color:rgba(0,0,0,0.1);">Morguard</span>
+          <span style="font-size:16px;font-weight:700;color:rgba(0,0,0,0.1);">Colliers</span>
+          <span style="font-size:16px;font-weight:700;color:rgba(0,0,0,0.1);">Primaris</span>
+        </div>
+        <p style="font-size:12px;color:#999;margin-top:12px;">
+          <!-- PLACEHOLDER: RealComm award name and year -->
+          <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border:1px solid #ebebeb;border-radius:6px;font-size:11px;font-weight:500;color:#666;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            RealComm Innovation Award
+          </span>
+        </p>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#tg{grid-template-columns:1fr 1fr 1fr!important;}#tg>div:nth-child(4){grid-column:1/2;}#tg>div:nth-child(5){grid-column:2/4;}}</style>
+  </div>
+</section>
+
+<!-- ONBOARDING (timeline) -->
+<section style="padding:100px 0;border-top:1px solid #ebebeb;">
+  <div class="mx" style="text-align:center;">
+    <div class="pill" style="margin-bottom:20px;margin-left:auto;margin-right:auto;"><span style="color:#22c55e;">&#10022;</span>Onboarding</div>
+    <h2 style="margin-bottom:12px;">Two weeks to go live.<br>Full visibility from day one.</h2>
+    <p style="font-size:16px;color:#666;margin-bottom:56px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7;">We learn your buildings, configure your channels, and take over. Powered by Alex, our AI engine.</p>
+    <!-- Horizontal timeline -->
+    <div style="display:grid;grid-template-columns:1fr;gap:0;text-align:left;max-width:960px;margin:0 auto;" id="tl-grid">
+      <div style="display:flex;gap:0;">
+        <!-- Step 1 -->
+        <div style="flex:1;position:relative;padding:0 24px;">
+          <div style="display:flex;align-items:center;gap:0;margin-bottom:24px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:#fff;font-weight:700;font-size:13px;">1</span></div>
+            <div style="flex:1;height:2px;background:linear-gradient(to right,#22c55e,#22c55e);"></div>
+          </div>
+          <p style="font-weight:600;font-size:15px;margin-bottom:8px;">Week 1: Ingestion</p>
+          <p style="font-size:13px;color:#666;line-height:1.7;">SOPs, policies, leases, vendor lists, emergency contacts ingested. Channels configured. AI trained and tested against real scenarios.</p>
+        </div>
+        <!-- Step 2 -->
+        <div style="flex:1;position:relative;padding:0 24px;">
+          <div style="display:flex;align-items:center;gap:0;margin-bottom:24px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:#fff;font-weight:700;font-size:13px;">2</span></div>
+            <div style="flex:1;height:2px;background:linear-gradient(to right,#22c55e,#22c55e);"></div>
+          </div>
+          <p style="font-weight:600;font-size:15px;margin-bottom:8px;">Week 2: Go live</p>
+          <p style="font-size:13px;color:#666;line-height:1.7;">Ops desk agents briefed. Handoff workflows tested end-to-end. System goes live with elevated QA and daily check-ins.</p>
+        </div>
+        <!-- Step 3 -->
+        <div style="flex:1;position:relative;padding:0 24px;">
+          <div style="display:flex;align-items:center;gap:0;margin-bottom:24px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:#fff;font-weight:700;font-size:13px;">3</span></div>
+          </div>
+          <p style="font-weight:600;font-size:15px;margin-bottom:8px;">After that: you review</p>
+          <p style="font-size:13px;color:#666;line-height:1.7;">Monthly SLA report. Response times, compliance rates, escalation volume. You review it, you decide what changes. That's your involvement.</p>
+        </div>
+      </div>
+    </div>
+    <style>@media(max-width:767px){#tl-grid>div{flex-direction:column!important;}#tl-grid>div>div{padding:0 0 32px!important;}#tl-grid>div>div>div:first-child{flex-direction:column!important;align-items:flex-start!important;}#tl-grid>div>div>div:first-child>div:last-child{width:2px!important;height:40px!important;background:#22c55e!important;}}</style>
+  </div>
+</section>
+
+<!-- SECURITY (left text + SOC2/GDPR, right stacked cards) -->
+<section style="padding:100px 0;background:#f5f5f7;">
+  <div class="mx">
+    <div style="display:grid;grid-template-columns:1fr;gap:56px;" id="sg">
+      <div>
+        <div class="pill" style="margin-bottom:20px;"><span style="color:#000;">&#10022;</span>Security</div>
+        <h2 style="font-size:clamp(28px,3.5vw,36px);margin-bottom:20px;">Built for the data your<br>tenants and lawyers care about</h2>
+        <p style="font-size:16px;color:#666;line-height:1.7;margin-bottom:24px;">AI never sends legal notices, negotiates lease terms, or approves policy exceptions without your review. Every high-risk decision requires your approval. You own every decision. Full audit trail on every task.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Ccircle cx='26' cy='26' r='24' fill='none' stroke='%23d4d4d4' stroke-width='1'/%3E%3Ctext x='26' y='22' text-anchor='middle' font-size='7' fill='%23999'%3EAICPA%3C/text%3E%3Ctext x='26' y='33' text-anchor='middle' font-size='9' font-weight='bold' fill='%23666'%3ESOC 2%3C/text%3E%3C/svg%3E" width="52" height="52" alt="SOC 2">
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="cd" style="padding:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;">
+          <div><p style="font-weight:600;font-size:15px;margin-bottom:4px;">Your data stays yours</p><p style="font-size:13px;color:#666;">Your data is only accessible to your operations and is never used to train models.</p></div>
+          <div style="width:56px;height:56px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#fbbf24);opacity:0.7;"></div>
+        </div>
+        <div class="cd" style="padding:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;">
+          <div><p style="font-weight:600;font-size:15px;margin-bottom:4px;">7-year tamper-evident archive</p><p style="font-size:13px;color:#666;">All documents hashed on ingestion. Full audit trail on every task and interaction.</p></div>
+          <div style="width:56px;height:56px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#dcfce7,#22c55e);opacity:0.7;"></div>
+        </div>
+        <div class="cd" style="padding:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;">
+          <div><p style="font-weight:600;font-size:15px;margin-bottom:4px;">Secure integrations</p><p style="font-size:13px;color:#666;">Integrates with Yardi and MRI. Works alongside your system of record.</p></div>
+          <div style="width:56px;height:56px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#e0e7ff,#6366f1);opacity:0.7;"></div>
+        </div>
+        <div class="cd" style="padding:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;">
+          <div><p style="font-weight:600;font-size:15px;margin-bottom:4px;">Private deployment</p><p style="font-size:13px;color:#666;">Your data never touches shared infrastructure. Private cloud options available.</p></div>
+          <div style="width:56px;height:56px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#f59e0b);opacity:0.7;"></div>
+        </div>
+        <div class="cd" style="padding:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;">
+          <div><p style="font-weight:600;font-size:15px;margin-bottom:4px;">Multi-cloud, AI-neutral</p><p style="font-size:13px;color:#666;">AWS, Azure, GCP. Best model for every task (OpenAI, Anthropic, Gemini).</p></div>
+          <div style="width:56px;height:56px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#fce7f3,#ec4899);opacity:0.7;"></div>
+        </div>
+      </div>
+    </div>
+    <style>@media(min-width:1024px){#sg{grid-template-columns:1fr 1.2fr!important;}}</style>
+    <div style="margin-top:32px;padding:16px 24px;border:1px solid #ebebeb;border-radius:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <p style="font-size:14px;color:#666;display:flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Premise AI is committed to safeguarding your data.</p>
+      <a href="#" style="font-size:14px;font-weight:500;">Learn more &rsaquo;</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:80px 0;" id="pilot">
+  <div class="mx">
+    <div style="background:#e8e8ed;border-radius:28px;padding:80px 32px;text-align:center;position:relative;overflow:hidden;">
+      <!-- Large organic gradient blob bleeding off right edge -->
+      <div style="position:absolute;bottom:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#fb923c,#ec4899,#a855f7);opacity:0.25;"></div>
+      <div style="position:absolute;top:-80px;left:-80px;width:240px;height:240px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#06b6d4);opacity:0.06;"></div>
+      <h2 style="position:relative;margin-bottom:16px;">Pick one operation.<br>We'll prove it in 30 days.</h2>
+      <p style="font-size:16px;color:#666;max-width:420px;margin:0 auto 32px;line-height:1.7;position:relative;">We onboard in two weeks and run it against our SLAs. If we miss them, the month is free.</p>
+      <a href="mailto:rafi@premisesaas.com" class="btn btn-d" style="padding:14px 32px;position:relative;">Start your pilot</a>
+      <p style="font-size:12px;color:#bbb;margin-top:12px;position:relative;display:flex;align-items:center;justify-content:center;gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>SLA-backed guarantee</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#000;color:#fff;">
+  <div class="mx" style="padding-top:64px;padding-bottom:40px;">
+    <div style="display:grid;grid-template-columns:1fr;gap:48px;margin-bottom:48px;" id="fg">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="width:28px;height:28px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;"><span style="color:#000;font-weight:700;font-size:13px;">P</span></div><span style="font-weight:700;">Premise AI</span></div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.3);">&copy; 2026 Premise AI, Inc.</p>
+        <a href="mailto:rafi@premisesaas.com" style="display:inline-flex;padding:6px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.15);font-size:13px;color:#fff;margin-top:16px;">Contact</a>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <a href="#" style="width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="#" style="width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)"><circle cx="12" cy="12" r="10" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/></svg></a>
+          <a href="#" style="width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" style="width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)"><path d="M23 12l-7.071 7.071-1.414-1.414L20.172 12l-5.657-5.657 1.414-1.414L23 12zM3.828 12l5.657 5.657-1.414 1.414L1 12l7.071-7.071 1.414 1.414L3.828 12z"/></svg></a>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:20px;">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Ccircle cx='18' cy='18' r='16' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1'/%3E%3Ctext x='18' y='14' text-anchor='middle' font-size='5' fill='rgba(255,255,255,0.2)'%3EAICPA%3C/text%3E%3Ctext x='18' y='22' text-anchor='middle' font-size='6' font-weight='bold' fill='rgba(255,255,255,0.3)'%3ESOC 2%3C/text%3E%3C/svg%3E" width="36" height="36" alt="">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+        <div><p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.3);margin-bottom:16px;">Product</p><div style="display:flex;flex-direction:column;gap:10px;"><a href="#highlights" style="font-size:14px;color:rgba(255,255,255,0.4);">What We Handle</a><a href="#how" style="font-size:14px;color:rgba(255,255,255,0.4);">How It Works</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.4);">Security</a></div></div>
+        <div><p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.3);margin-bottom:16px;">Company</p><div style="display:flex;flex-direction:column;gap:10px;"><a href="#proof" style="font-size:14px;color:rgba(255,255,255,0.4);">Results</a><a href="#pilot" style="font-size:14px;color:rgba(255,255,255,0.4);">Start Pilot</a></div></div>
+        <div><p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.3);margin-bottom:16px;">Legal</p><div style="display:flex;flex-direction:column;gap:10px;"><a href="#" style="font-size:14px;color:rgba(255,255,255,0.4);">Privacy policy</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.4);">Terms of service</a></div></div>
+      </div>
+    </div>
+    <style>@media(min-width:768px){#fg{grid-template-columns:1fr 1.5fr!important;}}</style>
+    <!-- Large ghosted logo -->
+    <div style="border-top:1px solid rgba(255,255,255,0.05);padding-top:48px;overflow:hidden;text-align:center;">
+      <p style="font-size:clamp(80px,15vw,200px);font-weight:800;letter-spacing:-0.05em;line-height:0.85;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,0.06);">Premise AI</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Lenis + reveal -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+const l=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:!0});function r(t){l.raf(t);requestAnimationFrame(r)}requestAnimationFrame(r);
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));t&&l.scrollTo(t)})});
+// Scroll reveal with section-level animation
+const o=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');o.unobserve(e.target);}})},{threshold:.08,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal,.reveal-s,.sec-reveal,.svg-anim').forEach(el=>o.observe(el));
+
+// Add section-level animations to grids and content blocks
+document.querySelectorAll('#hlh,#wkh,#hwh,#bnh,#ft,#fb,#eg,#tg,#hwg,#bg2').forEach(el=>{
+  if(!el.classList.contains('reveal')&&!el.classList.contains('sec-reveal')){
+    el.classList.add('sec-reveal');
+    o.observe(el);
+  }
+});
+// Stagger cards with spring bounce
+document.querySelectorAll('#hlc > .cd, #eg > .cd').forEach((el,i)=>{
+  el.classList.add('reveal-s');
+  el.style.transitionDelay=(i*0.15)+'s';
+  o.observe(el);
+});
+document.querySelectorAll('#tg > .cd, #tg > div').forEach((el,i)=>{
+  el.classList.add('reveal-s');
+  el.style.transitionDelay=(i*0.12)+'s';
+  o.observe(el);
+});
+document.querySelectorAll('#ft > .ft-card').forEach((el,i)=>{
+  el.style.transitionDelay=(i*0.2)+'s';
+});
+document.querySelectorAll('#fb > .ft-card').forEach((el,i)=>{
+  el.style.transitionDelay=(i*0.15)+'s';
+});
+// Onboarding timeline steps
+document.querySelectorAll('#tl-grid > div > div').forEach((el,i)=>{
+  el.classList.add('reveal');
+  el.style.transitionDelay=(i*0.2)+'s';
+  o.observe(el);
+});
+// Calendar days
+document.querySelectorAll('#wkh + style + div > div:last-child > div').forEach((el,i)=>{
+  el.classList.add('reveal');
+  el.style.transitionDelay=(i*0.1)+'s';
+  o.observe(el);
+});
+// Security cards
+document.querySelectorAll('#sg .cd').forEach((el,i)=>{
+  el.classList.add('reveal-s');
+  el.style.transitionDelay=(i*0.12)+'s';
+  o.observe(el);
+});
+// Works with tools pills
+document.querySelectorAll('.mx > div > div > span[style*="border-radius:999px"]').forEach((el,i)=>{
+  el.style.transition='opacity 0.5s ease-out '+(i*0.08)+'s, transform 0.8s cubic-bezier(0.34,1.56,0.64,1) '+(i*0.08)+'s';
+  el.style.opacity='0';
+  el.style.transform='translateY(10px) scale(0.9)';
+  const pObs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){el.style.opacity='1';el.style.transform='translateY(0) scale(1)';pObs.unobserve(el);}})},{threshold:.1});
+  pObs.observe(el);
+});
+
+// Hero animations
+const heroObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      // Animate feed rows sliding in
+      document.querySelectorAll('.hero-row').forEach(r => { r.style.opacity='1'; r.style.transform='translateX(0)'; });
+      // Animate compliance bar
+      const bar = document.querySelector('.hero-bar');
+      if (bar) bar.style.width = '97%';
+      // Animate counter
+      const counter = document.querySelector('.hero-count');
+      if (counter) {
+        let n = 0;
+        const iv = setInterval(() => { n += 3; if (n >= 97) { n = 97; clearInterval(iv); } counter.textContent = n + '%'; }, 30);
+      }
+      // Pulse the live dot
+      const pulse = document.querySelector('.hero-pulse');
+      if (pulse) pulse.style.animation = 'pulse 2s ease infinite';
+      heroObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+const heroCard = document.querySelector('#hero-feed');
+if (heroCard) heroObs.observe(heroCard);
+
+// Init: open first items
+document.querySelectorAll('.hiw-item[data-idx="0"] .hiw-desc').forEach(d=>d.classList.add('open'));
+document.querySelectorAll('.ben-item[data-idx="0"] .ben-desc').forEach(d=>d.classList.add('open'));
+
+// HOW IT WORKS accordion (smooth) + visual swap
+document.querySelectorAll('.hiw-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const idx=item.dataset.idx;
+    document.querySelectorAll('.hiw-item').forEach(i=>{
+      const num=i.querySelector('.hiw-num');
+      const title=i.querySelector('.hiw-title');
+      const desc=i.querySelector('.hiw-desc');
+      if(i===item){
+        i.classList.add('active');
+        num.style.color='#f97316';
+        title.style.color='#000';
+        if(desc) desc.classList.add('open');
+      } else {
+        i.classList.remove('active');
+        num.style.color='#d4d4d4';
+        title.style.color='#a3a3a3';
+        if(desc) desc.classList.remove('open');
+      }
+    });
+    // Swap visual
+    document.querySelectorAll('.hiw-visual').forEach(v=>{
+      v.style.opacity = v.dataset.idx===idx ? '1' : '0';
+      v.style.position = v.dataset.idx===idx ? 'relative' : 'absolute';
+    });
+  });
+});
+
+// EXPLORE tabs
+document.querySelectorAll('.exp-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const idx=tab.dataset.tab;
+    // Update tabs
+    document.querySelectorAll('.exp-tab').forEach(t=>{
+      t.style.color='rgba(255,255,255,0.3)';t.style.fontWeight='400';t.style.borderBottom='none';
+    });
+    tab.style.color='#fff';tab.style.fontWeight='500';tab.style.borderBottom='2px solid #fff';
+    // Update sidebar
+    document.querySelectorAll('.exp-sb-item').forEach(s=>{
+      s.style.color='#a3a3a3';s.style.fontWeight='400';s.style.background='transparent';s.style.borderRight='none';
+    });
+    const sbi=document.querySelector('.exp-sb-item[data-tab="'+idx+'"]');
+    if(sbi){sbi.style.color='#000';sbi.style.fontWeight='500';sbi.style.background='#fff';sbi.style.borderRight='2px solid #000';}
+    // Update panels
+    document.querySelectorAll('.exp-panel').forEach(p=>{p.style.display='none';});
+    const panel=document.querySelector('.exp-panel[data-tab="'+idx+'"]');
+    if(panel) panel.style.display='block';
+  });
+});
+// Sidebar clicks mirror tab clicks
+document.querySelectorAll('.exp-sb-item').forEach(sbi=>{
+  sbi.addEventListener('click',()=>{
+    const tab=document.querySelector('.exp-tab[data-tab="'+sbi.dataset.tab+'"]');
+    if(tab) tab.click();
+  });
+});
+
+// BENEFITS accordion (same pattern as How It Works) + visual swap
+document.querySelectorAll('.ben-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const idx=item.dataset.idx;
+    document.querySelectorAll('.ben-item').forEach(i=>{
+      const num=i.querySelector('.ben-num');
+      const title=i.querySelector('.ben-title');
+      const desc=i.querySelector('.ben-desc');
+      if(i===item){
+        i.classList.add('active');
+        if(num) num.style.color='#dc2626';
+        if(title) title.style.color='#000';
+        if(desc) desc.classList.add('open');
+      } else {
+        i.classList.remove('active');
+        if(num) num.style.color='#d4d4d4';
+        if(title) title.style.color='#a3a3a3';
+        if(desc) desc.classList.remove('open');
+      }
+    });
+    // Swap visual
+    document.querySelectorAll('.ben-visual').forEach(v=>{
+      v.style.opacity = v.dataset.idx===idx ? '1' : '0';
+      v.style.position = v.dataset.idx===idx ? 'relative' : 'absolute';
+    });
+  });
+});
+</script>
+
+</body>
+</html>
